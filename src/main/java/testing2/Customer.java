@@ -15,7 +15,10 @@ class Customer extends User
     
     Customer()
     {
-        
+        w = new Wallet(0);
+        loc = "A";
+        isInTrip = false;
+        assignedDriver = null;
     }
     Customer(String user, String pass)
     {

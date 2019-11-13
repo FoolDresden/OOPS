@@ -30,8 +30,6 @@ public class DBMSUtils
         password = "varsha123";
         try
         {
-            //MongoClientURI uri = new MongoClientURI(
-    //"mongodb+srv://varundb:"+password+"@cluster0-oi5zy.mongodb.net/test?retryWrites=true&w=majority");
             mc = MongoClients.create("mongodb+srv://varundb:"+password+"@cluster0-oi5zy.mongodb.net/test?retryWrites=true&w=majority"); // Create database at localhost:27017
             db = mc.getDatabase("users");
         }
@@ -54,7 +52,8 @@ public class DBMSUtils
                              .append("location", c.loc)
                              .append("in_trip", false)
                              .append("trip_start", 0)
-                             .append("trip_end", 0);
+                             .append("trip_end", 0)
+                             .append("assigned_driver", "");
             customers.insertOne(entry);
             return true; 
         }
@@ -64,22 +63,67 @@ public class DBMSUtils
         }
     }
 
+    public Customer getCustomerDetails(String name)
+    {
+        Customer c = null;
+        MongoCollection<Document> customers = db.getCollection("customers");
+        Document cursor = customers.find(eq("name", name)).first();
+        if(cursor == null)
+        {
+            return c;
+        }
+        else
+        {
+            c = new Customer();
+            c.username = (String)cursor.get("name");
+            c.password = (String)cursor.get("password");
+            c.w.money = Double.valueOf(""+cursor.get("amount_in_wallet"));
+            c.loc = (String)cursor.get("location");
+            c.isInTrip = Boolean.parseBoolean((String)cursor.get("in_trip"));
+            c.assignedDriver = getDriverDetails((String)cursor.get("assigned_driver"));
+            c.assignedDriver.assignedCustomer = c;
+
+            return c;
+        }
+    }
+
+    public Driver getDriverDetails(String name)
+    {
+        Driver d = null;
+        MongoCollection<Document> drivers = db.getCollection("drivers");
+        Document cursor = drivers.find(eq("name", name)).first();
+        if(cursor == null)
+        {
+            return d;
+        }
+        else
+        {
+            d = new Driver();
+            d.username = (String)cursor.get("name");
+            d.rating = Double.valueOf(""+cursor.get("rating"));
+            d.loc = (String)cursor.get("location");
+            d.isInTrip = Boolean.parseBoolean((String)cursor.get("in_trip"));
+            d.assignedCustomer = null;
+            d.n_rides = Integer.parseInt((String)cursor.get("number_of_rides"));
+
+            return d;
+        }
+    }
+
     public boolean createNewUser(Driver d)
     {
         MongoCollection<Document> drivers = db.getCollection("drivers");
         Document cursor = drivers.find(eq("name", d.username)).first();
         if(cursor == null)
         {
-            //Document cust_details = new Document("name", d.assignedCustomer.username)
-            //                        .append("location", d.assignedCustomer.loc);
-
             Document entry = new Document("name", d.username)
                              .append("rating", d.rating)
                              .append("location", d.loc)
                              .append("in_trip", d.isInTrip);
-                             //.append("assigned_customer", cust_details);
+                             .append("assigned_customer", "")
+                             .append("number_of_rides", 0);
             drivers.insertOne(entry);
-            return true; 
+            return true;
         }
         else
         {
@@ -123,6 +167,7 @@ public class DBMSUtils
             d.isInTrip = false;
             d.assignedCustomer.isInTrip = false;
             d.assignedCustomer.loc = loc;
+            d.n_rides += 1;
             try
             {
                 MongoCollection<Document> customers = db.getCollection("customers");
@@ -137,7 +182,9 @@ public class DBMSUtils
                                         combine(set("in_trip", false), 
                                         set("amount_in_wallet", d.assignedCustomer.w.money),
                                         set("trip_start", 0),
-                                        set("trip_end", 0)));
+                                        set("trip_end", 0),
+                                        set("assigned_driver", ""),
+                                        set("location", loc)));
                 }
                 MongoCollection<Document> drivers = db.getCollection("drivers");
                 cursor = drivers.find(eq("name", d.username)).first();
@@ -148,7 +195,8 @@ public class DBMSUtils
                 else
                 {
                     drivers.updateOne(eq("name", d.username), combine(set("in_trip", false), 
-                                      set("rating", d.rating), set("location", loc)));
+                                      set("rating", d.rating), set("location", loc),
+                                      set("assigned_customer", ""), set("number_of_rides", d.n_rides)));
                 }
                 d.assignedCustomer.assignedDriver = null;
                 d.assignedCustomer = null;
@@ -173,6 +221,7 @@ public class DBMSUtils
         {
             d.isInTrip = true;
             d.assignedCustomer.isInTrip = true;
+            d.assignedCustomer.assignedDriver = d;
             try
             {
                 MongoCollection<Document> customers = db.getCollection("customers");
@@ -186,7 +235,7 @@ public class DBMSUtils
                     long start = System.currentTimeMillis();
                     customers.updateOne(eq("name", d.assignedCustomer.username), 
                         combine(set("in_trip", true), set("trip_start", start),
-                            set("trip_end", start+trip_time)));
+                            set("trip_end", start+trip_time), set("assigned_driver", d.name)));
                 }
                 MongoCollection<Document> drivers = db.getCollection("drivers");
                 cursor = drivers.find(eq("name", d.username)).first();
@@ -196,7 +245,8 @@ public class DBMSUtils
                 }
                 else
                 {
-                    drivers.updateOne(eq("name", d.username), set("in_trip", true));
+                    drivers.updateOne(eq("name", d.username), combine(set("in_trip", true),
+                                      set("assigned_customer", d.assignedCustomer.username)));
                 }
                 return true;
             }
@@ -248,26 +298,15 @@ public class DBMSUtils
             }
             else
             {
-                System.out.println("reached here");
-                Customer c = new Customer(username, password);
-                System.out.println("done here");
+                Customer c = new Customer();
+                c.username = username;
+                c.password = password;
                 String s=""+cursor.get("amount_in_wallet");
                 Double d = Double.valueOf(s);
-                System.out.println(s);
-////                c.username = username;
-////                c.password = password;
-////                //System.out.println(" yeetus dat fetus");
-////                Object d = cursor.get("amount_in_wallet");
-////                Double obj = (Double)d;
-////                System.out.println("hi");
-////               // System.out.println(cursor.get("amount_in_wallet").getClass().getName());
-////               // System.out.println(cursor.get("amount_in_wallet").toString());
-////                //System.out.println(Double.valueOf(cursor.get("amount_in_wallet").toString()));
                 c.w.money = d;
-////                System.out.println("fetus deletus");
                 c.loc =  (String)cursor.get("location");
                 c.isInTrip = Boolean.parseBoolean(""+cursor.get("in_trip"));
-//                return null;
+                c.assignedDriver = getDriverDetails((String)cursor.get("assigned_driver"));
                 
                 return c;
             }
@@ -291,7 +330,7 @@ public class DBMSUtils
             }
             else
             {
-                double money = Double.parseDouble((String)cursor.get("amount_in_wallet"));
+                double money = Double.valueOf(""+cursor.get("amount_in_wallet"));
                 customers.updateOne(eq("name", c.username), set("amount_in_wallet", (money+amount)));
             }
         }
@@ -314,15 +353,12 @@ public class DBMSUtils
         {
             MongoCollection<Document> drivers = db.getCollection("drivers");
             MongoCursor<Document> cursor = drivers.find(and(eq("location", loc), eq("in_trip", false))).iterator();
-            int rating = 0;
+            double rating = 0.0;
             while(cursor.hasNext())
             {
-                if( Integer.parseInt((String)cursor.next().get("rating")) >= rating)
+                if(Double.valueOf(""+cursor.next().get("rating")) >= rating)
                 {
-                    d = new Driver();
-                    d.name = (String)cursor.next().get("name");
-                    d.rating = Integer.parseInt((String)cursor.next().get("rating"));
-                    d.loc = loc;
+                    d = getDriverDetails((String)cursor.next().get("name"));
                 }
             }
             cursor.close();
