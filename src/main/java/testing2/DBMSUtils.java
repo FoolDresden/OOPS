@@ -104,7 +104,7 @@ public class DBMSUtils
             c.password = (String)cursor.get("password");
             c.w.money = Double.valueOf(""+cursor.get("amount_in_wallet"));
             c.loc = (String)cursor.get("location");
-            c.isInTrip = Boolean.parseBoolean((String)cursor.get("in_trip"));
+            c.isInTrip = Boolean.parseBoolean(""+cursor.get("in_trip"));
             c.assignedDriver = getDriverDetails((String)cursor.get("assigned_driver"));
             c.assignedDriver.assignedCustomer = c;
 
@@ -182,7 +182,7 @@ public class DBMSUtils
         else
         {
             boolean currentStatus = Boolean.parseBoolean(""+cursor.get("in_trip"));
-            if(currentStatus)
+            if(currentStatus == true)
             {
                 long end_time = getEndTime(c);
                 long curr_time = System.currentTimeMillis();
@@ -319,7 +319,7 @@ public class DBMSUtils
             }
             else
             {
-                return Long.parseLong((String)cursor.get("trip_end"));
+                return Long.parseLong(""+cursor.get("trip_end"));
             }
         }
         catch(Exception e)
@@ -350,7 +350,10 @@ public class DBMSUtils
                 c.w.money = d;
                 c.loc =  (String)cursor.get("location");
                 c.isInTrip = Boolean.parseBoolean(""+cursor.get("in_trip"));
-                c.assignedDriver = getDriverDetails((String)cursor.get("assigned_driver"));
+                String temp = (String)cursor.get("assigned_driver");
+                c.assignedDriver = getDriverDetails(temp);
+                if(!temp.equals(""))
+                    c.assignedDriver.assignedCustomer = c;
                 
                 return c;
             }
