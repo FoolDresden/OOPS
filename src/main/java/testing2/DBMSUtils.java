@@ -181,7 +181,7 @@ public class DBMSUtils
         }
         else
         {
-            boolean currentStatus = Boolean.parseBoolean((String)cursor.get("in_trip"));
+            boolean currentStatus = Boolean.parseBoolean(""+cursor.get("in_trip"));
             if(currentStatus)
             {
                 long end_time = getEndTime(c);
@@ -331,8 +331,8 @@ public class DBMSUtils
 
     public Customer loginUser(String username, String password)
     {
-        try
-        {
+//        try
+//        {
             MongoCollection<Document> customers = db.getCollection("customers");
             Document cursor = customers.find(and(eq("name", username), eq("password", password))).first();
             System.out.println(cursor);
@@ -354,13 +354,13 @@ public class DBMSUtils
                 
                 return c;
             }
-        }
-        catch(Exception e)
-        {
-            System.out.println("ERRRRRRR");
-            System.out.println(e);
-            return null;
-        }
+//        }
+//        catch(Exception e)
+//        {
+//            System.out.println("ERRRRRRR");
+//            System.out.println(e);
+//            return null;
+//        }
     }
     public boolean addMoney(Customer c, double amount)
     {
