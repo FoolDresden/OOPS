@@ -5,7 +5,7 @@ class Driver extends User
     String loc;
     boolean isInTrip;
     Customer assignedCustomer;
-    String name;
+    String username;
     int n_rides;
     Driver()
     {
@@ -13,6 +13,14 @@ class Driver extends User
         isInTrip = false;
         assignedCustomer = null;
         n_rides = 0;
+    }
+    Driver(String name)
+    {
+        this.username=name;
+        rating = 3.0;
+        isInTrip = false;
+        assignedCustomer = null;
+        n_rides = 0;        
     }
     public boolean AssignCustomer(Customer c1)
     {

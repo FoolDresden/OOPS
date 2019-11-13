@@ -119,7 +119,7 @@ public class DBMSUtils
             Document entry = new Document("name", d.username)
                              .append("rating", d.rating)
                              .append("location", d.loc)
-                             .append("in_trip", d.isInTrip);
+                             .append("in_trip", d.isInTrip)
                              .append("assigned_customer", "")
                              .append("number_of_rides", 0);
             drivers.insertOne(entry);
@@ -235,7 +235,7 @@ public class DBMSUtils
                     long start = System.currentTimeMillis();
                     customers.updateOne(eq("name", d.assignedCustomer.username), 
                         combine(set("in_trip", true), set("trip_start", start),
-                            set("trip_end", start+trip_time), set("assigned_driver", d.name)));
+                            set("trip_end", start+trip_time), set("assigned_driver", d.username)));
                 }
                 MongoCollection<Document> drivers = db.getCollection("drivers");
                 cursor = drivers.find(eq("name", d.username)).first();

@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.imageio.ImageIO;
+import java.io.*;
 /**
  *
  * @author shrey
@@ -19,6 +20,7 @@ public class MainFrame extends javax.swing.JFrame {
     boolean isInTrip=false;
     Customer c1;
     DBMSUtils db = new DBMSUtils();
+    String posA="",posB="";
     /*
      * Creates new form MainFrame
      */
@@ -53,7 +55,7 @@ public class MainFrame extends javax.swing.JFrame {
         username_label.setText(getUsername());
         wallet_status_label.setText(getWallet());
         double x=Double.parseDouble(getWallet());
-        if(isInTrip())
+        if(c1.isInTrip)
         {
             deets_home_button.setVisible(true);
             home_book_button.setEnabled(false); 
@@ -82,7 +84,7 @@ public class MainFrame extends javax.swing.JFrame {
         wallet_status_label.setText(getWallet());
 //        System.out.println("excey");
         double x=Double.parseDouble(getWallet());
-        if(isInTrip())
+        if(c1.isInTrip)
         {
             deets_home_button.setVisible(true);
             home_book_button.setEnabled(false); 
@@ -126,10 +128,14 @@ public class MainFrame extends javax.swing.JFrame {
     
     private void callConfirmPanel()
     {
-        if(isInTrip())
+        int dist = getDistance(posA,posB);
+        double price = dist*100;
+        long eta= dist*30000;
+        if(c1.isInTrip)
         {
             cabname_confirm_label.setVisible(true);
-            cabname_confirm_field.setText(c1.assignedDriver.name);
+//            Driver d = db.getBestDriver();
+            cabname_confirm_field.setText(c1.assignedDriver.username);
             cabname_confirm_field.setVisible(true);
             time_confirm_field.setText(eta());
             cost_confirm_field.setText(""+Location.getEstimate(3.14, 69.420));
@@ -141,8 +147,8 @@ public class MainFrame extends javax.swing.JFrame {
         {
             cabname_confirm_label.setVisible(false);
             cabname_confirm_field.setVisible(false);
-            time_confirm_field.setText(eta());
-            cost_confirm_field.setText(""+Location.getEstimate(3.14, 69.420));    
+            time_confirm_field.setText(""+eta);
+            cost_confirm_field.setText(""+price);    
             confirm_confirm_button.setVisible(true);
             err_confirm_label.setVisible(false);
         }
@@ -200,6 +206,30 @@ public class MainFrame extends javax.swing.JFrame {
         arr[4]="E";
         return arr;
     }
+    
+    public int getDistance(String src, String dest)
+    {
+        char S = src.charAt(0);
+        char D = dest.charAt(0);
+        int distance = 0;
+        BufferedReader  reader;
+        try{
+        reader = new BufferedReader(new FileReader("D:\\shrey\\Documents\\JavaProjs\\OOPS\\src\\main\\java\\pathgen\\Path.txt"));
+        int numlines = (((int)S)- 65)*5 + (((int)D)-65);
+        String line="-1 -1 1";
+        for(int i = 0;i<=numlines;i++)
+        {
+            line = reader.readLine();
+        }
+        String[] arrOfStr = line.split(" ", 3);
+        distance =  Integer.parseInt(arrOfStr[2]);
+        }
+        catch(Exception e)
+        {
+           e.printStackTrace();
+        }
+        return distance;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -230,6 +260,7 @@ public class MainFrame extends javax.swing.JFrame {
         signIn = new javax.swing.JButton();
         reset = new javax.swing.JButton();
         err_signin_label = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         registerPanel = new javax.swing.JPanel();
         name_text = new javax.swing.JTextField();
         email_text = new javax.swing.JTextField();
@@ -351,17 +382,29 @@ public class MainFrame extends javax.swing.JFrame {
 
         mainPanel.add(initPanel, "initPanel");
 
-        user_label.setText("Username");
+        signinPanel.setLayout(null);
+        signinPanel.add(user_field);
+        user_field.setBounds(140, 70, 150, 32);
 
-        pass_label.setText("Password");
+        user_label.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Username</font></b></html>");
+        signinPanel.add(user_label);
+        user_label.setBounds(50, 70, 70, 32);
+
+        pass_label.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Password</font></b></html>");
+        signinPanel.add(pass_label);
+        pass_label.setBounds(51, 120, 70, 32);
 
         pass_field.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pass_fieldActionPerformed(evt);
             }
         });
+        signinPanel.add(pass_field);
+        pass_field.setBounds(140, 120, 150, 32);
 
-        signIn.setText("Sign in");
+        signIn.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Sign In</font></b></html>");
+        signIn.setContentAreaFilled(false);
+        signIn.setBorder(null);
         signIn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 signInMouseClicked(evt);
@@ -370,62 +413,30 @@ public class MainFrame extends javax.swing.JFrame {
                 signInMouseEntered(evt);
             }
         });
+        signinPanel.add(signIn);
+        signIn.setBounds(80, 200, 100, 40);
 
-        reset.setText("Reset");
+        reset.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Reset</font></b></html>");
+        reset.setContentAreaFilled(false);
+        reset.setBorder(null);
         reset.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 resetMouseClicked(evt);
             }
         });
+        signinPanel.add(reset);
+        reset.setBounds(206, 200, 100, 38);
 
         err_signin_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        err_signin_label.setText("ERROR");
+        err_signin_label.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Error</font></b></html>");
         err_signin_label.setVisible(false);
+        signinPanel.add(err_signin_label);
+        err_signin_label.setBounds(145, 232, 129, 69);
 
-        javax.swing.GroupLayout signinPanelLayout = new javax.swing.GroupLayout(signinPanel);
-        signinPanel.setLayout(signinPanelLayout);
-        signinPanelLayout.setHorizontalGroup(
-            signinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(signinPanelLayout.createSequentialGroup()
-                .addGroup(signinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(signinPanelLayout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addGroup(signinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(user_label)
-                            .addComponent(pass_label))
-                        .addGap(26, 26, 26)
-                        .addGroup(signinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(user_field)
-                            .addComponent(pass_field, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
-                    .addGroup(signinPanelLayout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addComponent(signIn, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56)
-                        .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(signinPanelLayout.createSequentialGroup()
-                        .addGap(145, 145, 145)
-                        .addComponent(err_signin_label, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(135, Short.MAX_VALUE))
-        );
-        signinPanelLayout.setVerticalGroup(
-            signinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(signinPanelLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(signinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(user_field, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(user_label, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
-                .addGroup(signinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pass_label, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pass_field, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
-                .addGroup(signinPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(signIn, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(reset, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(err_signin_label, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        jLabel5.setIcon(icon2);
+        jLabel5.setVisible(true);
+        signinPanel.add(jLabel5);
+        jLabel5.setBounds(0, 0, 460, 340);
 
         mainPanel.add(signinPanel, "signinPanel");
 
@@ -657,6 +668,11 @@ public class MainFrame extends javax.swing.JFrame {
         deets_home_button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 deets_home_buttonMouseClicked(evt);
+            }
+        });
+        deets_home_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deets_home_buttonActionPerformed(evt);
             }
         });
 
@@ -1062,8 +1078,16 @@ public class MainFrame extends javax.swing.JFrame {
                 throw new Exception();
             }
             String pass=String.valueOf(pass_wallet_field.getPassword());
-            if(pass.equals("password"))
+            try{
+            pass = Customer.HashPassword(pass);
+            }
+            catch(Exception e)
             {
+                System.out.println("Exception thrown");
+            }
+            if(pass.equals(c1.password))
+            {
+                db.addMoney(c1,toAdd);
                 callHomePanel("Money Added");
             }
             else
@@ -1131,30 +1155,50 @@ public class MainFrame extends javax.swing.JFrame {
         }
         else
         {
+            posA=src;
+            posB=dest;
             callConfirmPanel();
         }
     }//GEN-LAST:event_book_book_buttonMouseClicked
 
     private void confirm_confirm_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirm_confirm_buttonMouseClicked
-        if(cabAvail())
+        System.out.println("CLicked confirm");
+        System.out.println(posA+" "+posB);
+        Driver d=db.getBestDriver(posA);
+        if(d==null)
         {
-            callConfirmPanel();
-        }
-        else
-        {
-            err_confirm_label.setText("No cabs pls");
+            err_confirm_label.setText("Drivers not available");
             err_confirm_label.setVisible(true);
             return;
         }
-        if(canBook())
+        else
         {
-            isInTrip=true;
-            callConfirmPanel();
+            System.out.println("Got a driver rye");
+//            err_confirm_label.setText("No cabs pls");
+//            err_confirm_label.setVisible(true);
+//            return;
+        }
+        int dist = getDistance(posA,posB);
+        double price = dist*100;
+        long eta= dist*30000;
+        if(price<=c1.w.money)
+        {
+            d.assignedCustomer = c1;
+            if(db.startTrip(d, price, eta))
+            {
+                System.out.println("Got driverssss");
+                callConfirmPanel();                
+            }
+            else
+            {
+                err_confirm_label.setText("Some error happened. Please book again.");
+                err_confirm_label.setVisible(true);                
+            }
 //            callHomePanel("Cab Booked. CHeck deets");
         }
         else
         {
-            err_confirm_label.setText("Error");
+            err_confirm_label.setText("Not enough money in wallet");
             err_confirm_label.setVisible(true);
         }
     }//GEN-LAST:event_confirm_confirm_buttonMouseClicked
@@ -1166,6 +1210,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_NewUserButtonMouseClicked
 
     private void ExistingUserButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExistingUserButtonMouseClicked
+        createDrivers();
         callSignInPanel();
         //        CardLayout cards=(CardLayout)mainPanel.getLayout();
         //        cards.show(mainPanel, "signinPanel");
@@ -1183,9 +1228,26 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_signInMouseEntered
 
-    /**
-     * @param args the command line arguments
-     */
+    private void deets_home_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deets_home_buttonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deets_home_buttonActionPerformed
+
+    
+    public void createDrivers()
+    {
+        Driver d0=new Driver("Asura101");
+        d0.loc="A";
+//        Driver d1=new Driver("B");
+//        Driver d2=new Driver("C");
+//        Driver d3=new Driver("D");
+//        Driver d4=new Driver("E");
+        if(db.createNewUser(d0)){System.out.println("Created "+d0.username);}else{System.out.println("A");}
+//        if(db.createNewUser(d1)){}else{System.out.println("B");}
+//        if(db.createNewUser(d1)){}else{System.out.println("C");}
+//        if(db.createNewUser(d1)){}else{System.out.println("D");}
+//        if(db.createNewUser(d1)){}else{System.out.println("E");}
+        System.out.println("created new drivers");
+    }
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1211,6 +1273,7 @@ public class MainFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainFrame().setVisible(true);
@@ -1257,6 +1320,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;

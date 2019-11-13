@@ -11,6 +11,6 @@ repositories {
 
 dependencies {
     testCompile 'junit:junit:4.12'
-    implementation files('D:\\shrey\\Documents\\JavaProjs\\testing2\\src\\main\\java\\testing2\\bson-3.9.1.jar')
-    implementation files('D:\\shrey\\Documents\\JavaProjs\\testing2\\src\\main\\java\\testing2\\mongo-java-driver-3.9.1.jar')
+    implementation files('D:\\shrey\\Documents\\JavaProjs\\OOPS\\src\\main\\java\\testing2\\bson-3.9.1.jar')
+    implementation files('D:\\shrey\\Documents\\JavaProjs\\OOPS\\src\\main\\java\\testing2\\mongo-java-driver-3.9.1.jar')
 }

@@ -1,4 +1,4 @@
-import java.Math.*;
+
 import java.io.*;
 class Pathgen{
 
@@ -7,13 +7,13 @@ class Pathgen{
  Pathgen()
  {
     dist = new int[5][5];
-    n =6;
+    n =5;
  }
 void floyd_warshall(){
     for(int k=0;k<n;k++){
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                dist[i][j] = min(dist[i][k]+dist[k][j],dist[i][j]);
+                dist[i][j] = Math.min(dist[i][k]+dist[k][j],dist[i][j]);
                 }
             }
         }
@@ -52,16 +52,23 @@ void floyd_warshall(){
  void dump_paths()
  {
     floyd_warshall();
-    FileOutputStream f1 = new FileOutputStream("./Pathgen.txt");
-
+    try{
+    FileWriter f1 = new FileWriter("./Path.txt");
+    
     for(int i = 0;i<n;i++)
     {
         for(int j = 0 ;j<n ;j++)
         {
-            f1.write((char)(i+65)+" "+(char)(j+65)+" "+(Integer)dist[i][j].toString()+"\n");
+        	String towrite = (char)(i+65)+" "+(char)(j+65)+" "+((Integer)(dist[i][j])).toString()+"\n";
+            f1.write(towrite);
         }
     }
     f1.close();
+	}
+	catch(IOException ie)
+	{
+
+	}
  }
 
 
