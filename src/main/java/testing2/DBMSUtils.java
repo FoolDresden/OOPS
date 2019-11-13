@@ -192,6 +192,8 @@ public class DBMSUtils
                     final_status = endTrip(d);
                 }
             }
+            else
+                final_status = false;
         }
         if(final_status)
             return false;
