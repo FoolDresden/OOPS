@@ -426,13 +426,13 @@ public class DBMSUtils
                 }
             }
             cursor1.close();
-//        }
-//        catch(Exception e)
-//        {
-//            System.out.println("Couldn't get a driver but got sn error");
-//            System.out.println("Database not accessible : " + e);
-//            return null;
-//        }
+        }
+        catch(Exception e)
+        {
+            System.out.println("Couldn't get a driver but got sn error");
+            System.out.println("Database not accessible : " + e);
+            return null;
+        }
         return d;
     }
 }
