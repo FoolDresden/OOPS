@@ -42,6 +42,19 @@ public class DBMSUtils
 
     public boolean createNewUser(Customer c)
     {
+        /*
+        Parameters - 
+            Customer c -
+                Object of type Customer
+
+        Returns - 
+            Boolean - 
+                True if creation of new user succeeded
+                False if creation of new user failed or if user already exists
+                in database
+
+        This function creates a new user in the database if it doesn't exist already.
+        */
         MongoCollection<Document> customers = db.getCollection("customers");
         Document cursor = customers.find(eq("name", c.username)).first();
         if(cursor == null)
@@ -66,6 +79,17 @@ public class DBMSUtils
 
     public Customer getCustomerDetails(String name)
     {
+        /*
+        Parameters - 
+            String name -
+                Name of the customer whose details are to be obtained
+
+        Returns - 
+            Customer c -
+                A Customer object. Will be null if name doesn't exist
+
+        This function gets Customer details from the database.
+        */
         Customer c = null;
         MongoCollection<Document> customers = db.getCollection("customers");
         Document cursor = customers.find(eq("name", name)).first();
@@ -113,6 +137,19 @@ public class DBMSUtils
 
     public boolean createNewUser(Driver d)
     {
+        /*
+        Parameters - 
+            Driver d -
+                Object of type Customer
+
+        Returns - 
+            Boolean - 
+                True if creation of new driver succeeded
+                False if creation of new driver failed or if driver already exists
+                in database
+
+        This function creates a new driver in the database if it doesn't exist already.
+        */
         MongoCollection<Document> drivers = db.getCollection("drivers");
         Document cursor = drivers.find(eq("name", d.username)).first();
         if(cursor == null)
@@ -361,19 +398,21 @@ public class DBMSUtils
             double rating = 0.0;
             while(cursor.hasNext())
             {
-                if(Double.valueOf(""+cursor.next().get("rating")) >= rating)
+                Document temp = cursor.next();
+                if(Double.valueOf(""+temp.get("rating")) >= rating)
                 {
-                    d = getDriverDetails((String)cursor.next().get("name"));
+                    d = getDriverDetails((String)temp.get("name"));
                 }
             }
             cursor.close();
 
             long start = System.currentTimeMillis();
             MongoCollection<Document> customers = db.getCollection("customers");
-            cursor = customers.find(and(eq("in_trip", true), gte("trip_end", start))).iterator();
-            while(cursor.hasNext())
+            MongoCursor<Document> cursor1 = customers.find(and(eq("in_trip", true), gte("trip_end", start))).iterator();
+            while(cursor1.hasNext())
             {
-                Customer c = getCustomerDetails((String)cursor.next().get("name"));
+                Document temp = cursor1.next();
+                Customer c = getCustomerDetails((String)temp.get("name"));
                 Driver x = c.assignedDriver;
                 endTrip(x);
                 if(x.rating >= rating)
@@ -381,7 +420,7 @@ public class DBMSUtils
                     d = getDriverDetails(x.username);
                 }
             }
-            cursor.close();
+            cursor1.close();
         }
         catch(Exception e)
         {
