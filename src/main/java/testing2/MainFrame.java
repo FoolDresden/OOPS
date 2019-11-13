@@ -1184,7 +1184,7 @@ public class MainFrame extends javax.swing.JFrame {
         if(price<=c1.w.money)
         {
             d.assignedCustomer = c1;
-            if(db.startTrip(d, price, eta))
+            if(db.startTrip(d, price, eta, posA))
             {
                 System.out.println("Got driverssss");
                 callConfirmPanel();                
