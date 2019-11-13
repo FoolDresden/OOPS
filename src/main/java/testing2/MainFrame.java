@@ -64,6 +64,7 @@ public class MainFrame extends javax.swing.JFrame {
             home_err_label.setText("Trip ongoing...");
             home_err_label.setVisible(true);
         }
+        else{
         wallet_status_label.setText(getWallet());
         double x=Double.parseDouble(getWallet());
         if(x<=300)
@@ -78,7 +79,7 @@ public class MainFrame extends javax.swing.JFrame {
             deets_home_button.setVisible(false);
             home_book_button.setEnabled(true); 
             home_err_label.setVisible(false);            
-        }
+        }}
         CardLayout cards=(CardLayout)mainPanel.getLayout();
         cards.show(mainPanel, "homePanel");
     }
@@ -97,6 +98,7 @@ public class MainFrame extends javax.swing.JFrame {
             home_err_label.setText(msg);
             home_err_label.setVisible(true);
         }
+        else{
         wallet_status_label.setText(getWallet());
         double x=Double.parseDouble(getWallet());
         if(x<=300)
@@ -112,7 +114,7 @@ public class MainFrame extends javax.swing.JFrame {
             home_book_button.setEnabled(true); 
             home_err_label.setText(msg);
             home_err_label.setVisible(true);            
-        }
+        }}
         CardLayout cards=(CardLayout)mainPanel.getLayout();
         cards.show(mainPanel, "homePanel");
     }
@@ -1243,8 +1245,8 @@ public class MainFrame extends javax.swing.JFrame {
     
     public void createDrivers()
     {
-        Driver d0=new Driver("Asura101");
-        d0.loc="A";
+        Driver d0=new Driver("Asura103");
+        d0.loc="C";
 //        Driver d1=new Driver("B");
 //        Driver d2=new Driver("C");
 //        Driver d3=new Driver("D");
