@@ -127,9 +127,10 @@ public class DBMSUtils
             d.username = (String)cursor.get("name");
             d.rating = Double.valueOf(""+cursor.get("rating"));
             d.loc = (String)cursor.get("location");
-            d.isInTrip = Boolean.parseBoolean((String)cursor.get("in_trip"));
+            String isInTrip=""+cursor.get("in_trip");
+            d.isInTrip = Boolean.parseBoolean(isInTrip);
             d.assignedCustomer = null;
-            d.n_rides = Integer.parseInt((String)cursor.get("number_of_rides"));
+            d.n_rides = Integer.parseInt(""+cursor.get("number_of_rides"));
 
             return d;
         }
@@ -391,8 +392,8 @@ public class DBMSUtils
     public Driver getBestDriver(String loc)
     {
         Driver d = null;
-        try
-        {
+//        try
+//        {
             MongoCollection<Document> drivers = db.getCollection("drivers");
             MongoCursor<Document> cursor = drivers.find(and(eq("location", loc), eq("in_trip", false))).iterator();
             double rating = 0.0;
@@ -421,12 +422,13 @@ public class DBMSUtils
                 }
             }
             cursor1.close();
-        }
-        catch(Exception e)
-        {
-            System.out.println("Database not accessible : " + e);
-            return null;
-        }
+//        }
+//        catch(Exception e)
+//        {
+//            System.out.println("Couldn't get a driver but got sn error");
+//            System.out.println("Database not accessible : " + e);
+//            return null;
+//        }
         return d;
     }
 }
