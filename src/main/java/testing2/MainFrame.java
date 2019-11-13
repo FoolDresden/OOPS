@@ -53,17 +53,20 @@ public class MainFrame extends javax.swing.JFrame {
     private void callHomePanel()
     {
         username_label.setText(getUsername());
-        wallet_status_label.setText(getWallet());
-        double x=Double.parseDouble(getWallet());
+        
+        
         System.out.println(db.getTripStatus(c1));
         if(db.getTripStatus(c1))
         {
+            wallet_status_label.setText(getWallet());            
             deets_home_button.setVisible(true);
             home_book_button.setEnabled(false); 
             home_err_label.setText("Trip ongoing...");
             home_err_label.setVisible(true);
         }
-        else if(x<=300)
+        wallet_status_label.setText(getWallet());
+        double x=Double.parseDouble(getWallet());
+        if(x<=300)
         {
             deets_home_button.setVisible(false);
             home_book_button.setEnabled(false); 
@@ -82,18 +85,21 @@ public class MainFrame extends javax.swing.JFrame {
     private void callHomePanel(String msg)
     {
         username_label.setText(getUsername());
-        wallet_status_label.setText(getWallet());
+        
 //        System.out.println("excey");
-        double x=Double.parseDouble(getWallet());
+        
         System.out.println(db.getTripStatus(c1));
         if(db.getTripStatus(c1))
         {
+            wallet_status_label.setText(getWallet());
             deets_home_button.setVisible(true);
             home_book_button.setEnabled(false); 
             home_err_label.setText(msg);
             home_err_label.setVisible(true);
         }
-        else if(x<=300)
+        wallet_status_label.setText(getWallet());
+        double x=Double.parseDouble(getWallet());
+        if(x<=300)
         {
             deets_home_button.setVisible(false);
             home_book_button.setEnabled(false); 

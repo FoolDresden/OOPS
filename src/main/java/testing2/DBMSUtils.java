@@ -182,6 +182,7 @@ public class DBMSUtils
         else
         {
             boolean currentStatus = Boolean.parseBoolean(""+cursor.get("in_trip"));
+            System.out.println(currentStatus);
             if(currentStatus == true)
             {
                 long end_time = getEndTime(c);
@@ -192,7 +193,8 @@ public class DBMSUtils
                     final_status = endTrip(d);
                 }
             }
-            
+            else
+                return false;
         }
         if(final_status)
             return false;
