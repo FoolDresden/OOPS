@@ -104,7 +104,7 @@ public class DBMSUtils
             c.password = (String)cursor.get("password");
             c.w.money = Double.valueOf(""+cursor.get("amount_in_wallet"));
             c.loc = (String)cursor.get("location");
-            c.isInTrip = Boolean.parseBoolean((String)cursor.get("in_trip"));
+            c.isInTrip = Boolean.parseBoolean(""+cursor.get("in_trip"));
             c.assignedDriver = getDriverDetails((String)cursor.get("assigned_driver"));
             c.assignedDriver.assignedCustomer = c;
 
@@ -181,8 +181,8 @@ public class DBMSUtils
         }
         else
         {
-            boolean currentStatus = Boolean.parseBoolean((String)cursor.get("in_trip"));
-            if(currentStatus)
+            boolean currentStatus = Boolean.parseBoolean(""+cursor.get("in_trip"));
+            if(currentStatus == true)
             {
                 long end_time = getEndTime(c);
                 long curr_time = System.currentTimeMillis();
@@ -319,7 +319,7 @@ public class DBMSUtils
             }
             else
             {
-                return Long.parseLong((String)cursor.get("trip_end"));
+                return Long.parseLong(""+cursor.get("trip_end"));
             }
         }
         catch(Exception e)
@@ -393,8 +393,8 @@ public class DBMSUtils
     public Driver getBestDriver(String loc)
     {
         Driver d = null;
-//        try
-//        {
+        try
+        {
             MongoCollection<Document> drivers = db.getCollection("drivers");
             MongoCursor<Document> cursor = drivers.find(and(eq("location", loc), eq("in_trip", false))).iterator();
             double rating = 0.0;
