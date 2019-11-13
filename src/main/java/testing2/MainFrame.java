@@ -55,6 +55,7 @@ public class MainFrame extends javax.swing.JFrame {
         username_label.setText(getUsername());
         wallet_status_label.setText(getWallet());
         double x=Double.parseDouble(getWallet());
+        System.out.println(db.getTripStatus(c1));
         if(db.getTripStatus(c1))
         {
             deets_home_button.setVisible(true);
@@ -84,6 +85,7 @@ public class MainFrame extends javax.swing.JFrame {
         wallet_status_label.setText(getWallet());
 //        System.out.println("excey");
         double x=Double.parseDouble(getWallet());
+        System.out.println(db.getTripStatus(c1));
         if(db.getTripStatus(c1))
         {
             deets_home_button.setVisible(true);
@@ -1184,7 +1186,7 @@ public class MainFrame extends javax.swing.JFrame {
         if(price<=c1.w.money)
         {
             d.assignedCustomer = c1;
-            if(db.startTrip(d, price, eta, posA))
+            if(db.startTrip(d, price, eta, posB))
             {
                 System.out.println("Got driverssss");
                 callConfirmPanel();                

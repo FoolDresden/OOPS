@@ -192,6 +192,7 @@ public class DBMSUtils
                     final_status = endTrip(d);
                 }
             }
+            
         }
         if(final_status)
             return false;
@@ -396,8 +397,8 @@ public class DBMSUtils
     public Driver getBestDriver(String loc)
     {
         Driver d = null;
-//        try
-//        {
+        try
+        {
             MongoCollection<Document> drivers = db.getCollection("drivers");
             MongoCursor<Document> cursor = drivers.find(and(eq("location", loc), eq("in_trip", false))).iterator();
             double rating = 0.0;
