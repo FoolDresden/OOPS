@@ -170,32 +170,33 @@ public class DBMSUtils
         }
     }
 
-    public boolean getTripStatus(String driverName)
-    {
-        MongoCollection<Document> drivers = db.getCollection("drivers");
-        Document cursor = drivers.find(eq("name", driverName)).first();
-        if(cursor == null)
-        {
-            return false;
-        }
-        else
-        {
-            return Boolean.parseBoolean((String)cursor.get("in_trip"));
-        }
-    }
-
-    public boolean getTripStatus(String customerName, boolean customer)
+    public boolean getTripStatus(Customer c)
     {
         MongoCollection<Document> customers = db.getCollection("customers");
-        Document cursor = customers.find(eq("name", customerName)).first();
+        Document cursor = customers.find(eq("name", c.username)).first();
+        boolean final_status = false;
         if(cursor == null)
         {
             return false;
         }
         else
         {
-            return Boolean.parseBoolean((String)cursor.get("in_trip"));
+            boolean currentStatus = Boolean.parseBoolean((String)cursor.get("in_trip"));
+            if(currentStatus)
+            {
+                long end_time = getEndTime(c);
+                long curr_time = System.currentTimeMillis();
+                if(curr_time >= end_time)
+                {
+                    Driver d = c.assignedDriver;
+                    final_status = endTrip(d);
+                }
+            }
         }
+        if(final_status)
+            return false;
+        else
+            return true;
     }
 
     public boolean endTrip(Driver d)
