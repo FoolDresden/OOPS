@@ -53,7 +53,8 @@ public class DBMSUtils
                              .append("in_trip", false)
                              .append("trip_start", 0)
                              .append("trip_end", 0)
-                             .append("assigned_driver", "");
+                             .append("assigned_driver", "")
+                             .append("trip_price", 0);
             customers.insertOne(entry);
             return true; 
         }
@@ -159,14 +160,12 @@ public class DBMSUtils
         }
     }
 
-    public boolean endTrip(Driver d, double price, String loc)
+    public boolean endTrip(Driver d)
     {
         if(d.isInTrip == true)
         {
-            d.assignedCustomer.w.removeMoney(price);
             d.isInTrip = false;
             d.assignedCustomer.isInTrip = false;
-            d.assignedCustomer.loc = loc;
             d.n_rides += 1;
             try
             {
@@ -178,13 +177,15 @@ public class DBMSUtils
                 }
                 else
                 {
+                    price = Double.valueOf(""+cursor.get("trip_price"));
+                    d.assignedCustomer.w.removeMoney(price);
                     customers.updateOne(eq("name", d.assignedCustomer.username), 
                                         combine(set("in_trip", false), 
                                         set("amount_in_wallet", d.assignedCustomer.w.money),
                                         set("trip_start", 0),
                                         set("trip_end", 0),
                                         set("assigned_driver", ""),
-                                        set("location", loc)));
+                                        set("trip_price", 0)));
                 }
                 MongoCollection<Document> drivers = db.getCollection("drivers");
                 cursor = drivers.find(eq("name", d.username)).first();
@@ -195,12 +196,11 @@ public class DBMSUtils
                 else
                 {
                     drivers.updateOne(eq("name", d.username), combine(set("in_trip", false), 
-                                      set("rating", d.rating), set("location", loc),
+                                      set("rating", d.rating),
                                       set("assigned_customer", ""), set("number_of_rides", d.n_rides)));
                 }
                 d.assignedCustomer.assignedDriver = null;
                 d.assignedCustomer = null;
-                d.loc = loc;
                 return true;
             }
             catch(Exception e)
@@ -215,13 +215,15 @@ public class DBMSUtils
         }
     }
 
-    public boolean startTrip(Driver d, double price, long trip_time)
+    public boolean startTrip(Driver d, double price, long trip_time, String loc)
     {
         if(d.isInTrip == false)
         {
             d.isInTrip = true;
             d.assignedCustomer.isInTrip = true;
             d.assignedCustomer.assignedDriver = d;
+            d.assignedCustomer.loc = loc;
+            d.loc = loc;
             try
             {
                 MongoCollection<Document> customers = db.getCollection("customers");
@@ -235,7 +237,8 @@ public class DBMSUtils
                     long start = System.currentTimeMillis();
                     customers.updateOne(eq("name", d.assignedCustomer.username), 
                         combine(set("in_trip", true), set("trip_start", start),
-                            set("trip_end", start+trip_time), set("assigned_driver", d.name)));
+                            set("trip_end", start+trip_time), set("assigned_driver", d.name),
+                            set("location", loc), set("trip_price", price)));
                 }
                 MongoCollection<Document> drivers = db.getCollection("drivers");
                 cursor = drivers.find(eq("name", d.username)).first();
@@ -246,7 +249,8 @@ public class DBMSUtils
                 else
                 {
                     drivers.updateOne(eq("name", d.username), combine(set("in_trip", true),
-                                      set("assigned_customer", d.assignedCustomer.username)));
+                                      set("assigned_customer", d.assignedCustomer.username),
+                                      set("location", loc)));
                 }
                 return true;
             }
@@ -359,6 +363,21 @@ public class DBMSUtils
                 if(Double.valueOf(""+cursor.next().get("rating")) >= rating)
                 {
                     d = getDriverDetails((String)cursor.next().get("name"));
+                }
+            }
+            cursor.close();
+
+            long start = System.currentTimeMillis();
+            MongoCollection<Document> customers = db.getCollection("customers");
+            cursor = customers.find(and(eq("in_trip", true), gte("trip_end", start))).iterator();
+            while(cursor.hasNext())
+            {
+                Customer c = getCustomerDetails((String)cursor.next().get("name"));
+                Driver x = c.assignedDriver;
+                endTrip(x);
+                if(x.rating >= rating)
+                {
+                    d = getDriverDetails(x.name);
                 }
             }
             cursor.close();
