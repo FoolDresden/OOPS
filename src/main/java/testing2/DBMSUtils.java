@@ -350,7 +350,10 @@ public class DBMSUtils
                 c.w.money = d;
                 c.loc =  (String)cursor.get("location");
                 c.isInTrip = Boolean.parseBoolean(""+cursor.get("in_trip"));
-                c.assignedDriver = getDriverDetails((String)cursor.get("assigned_driver"));
+                String temp = (String)cursor.get("assigned_driver");
+                c.assignedDriver = getDriverDetails(temp);
+                if(!temp.equals(""))
+                    c.assignedDriver.assignedCustomer = c;
                 
                 return c;
             }
