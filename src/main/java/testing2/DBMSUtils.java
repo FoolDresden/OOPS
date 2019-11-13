@@ -333,8 +333,8 @@ public class DBMSUtils
 
     public Customer loginUser(String username, String password)
     {
-        try
-        {
+//        try
+//        {
             MongoCollection<Document> customers = db.getCollection("customers");
             Document cursor = customers.find(and(eq("name", username), eq("password", password))).first();
             System.out.println(cursor);
@@ -359,13 +359,13 @@ public class DBMSUtils
                 
                 return c;
             }
-        }
-        catch(Exception e)
-        {
-            System.out.println("ERRRRRRR");
-            System.out.println(e);
-            return null;
-        }
+//        }
+//        catch(Exception e)
+//        {
+//            System.out.println("ERRRRRRR");
+//            System.out.println(e);
+//            return null;
+//        }
     }
     public boolean addMoney(Customer c, double amount)
     {
@@ -398,8 +398,8 @@ public class DBMSUtils
     public Driver getBestDriver(String loc)
     {
         Driver d = null;
-        try
-        {
+//        try
+//        {
             MongoCollection<Document> drivers = db.getCollection("drivers");
             MongoCursor<Document> cursor = drivers.find(and(eq("location", loc), eq("in_trip", false))).iterator();
             double rating = 0.0;

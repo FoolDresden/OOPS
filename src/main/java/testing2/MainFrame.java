@@ -55,7 +55,7 @@ public class MainFrame extends javax.swing.JFrame {
         username_label.setText(getUsername());
         wallet_status_label.setText(getWallet());
         double x=Double.parseDouble(getWallet());
-        if(c1.isInTrip)
+        if(db.getTripStatus(c1))
         {
             deets_home_button.setVisible(true);
             home_book_button.setEnabled(false); 
@@ -84,7 +84,7 @@ public class MainFrame extends javax.swing.JFrame {
         wallet_status_label.setText(getWallet());
 //        System.out.println("excey");
         double x=Double.parseDouble(getWallet());
-        if(c1.isInTrip)
+        if(db.getTripStatus(c1))
         {
             deets_home_button.setVisible(true);
             home_book_button.setEnabled(false); 
@@ -131,7 +131,7 @@ public class MainFrame extends javax.swing.JFrame {
         int dist = getDistance(posA,posB);
         double price = dist*100;
         long eta= dist*30000;
-        if(c1.isInTrip)
+        if(db.getTripStatus(c1))
         {
             cabname_confirm_label.setVisible(true);
 //            Driver d = db.getBestDriver();
@@ -166,7 +166,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
     private boolean isInTrip()
     {
-        return isInTrip;
+        return db.getTripStatus(c1);
     }
     private String getUsername()
     {
@@ -990,8 +990,8 @@ public class MainFrame extends javax.swing.JFrame {
                 System.out.println("No such algorithm");
             }
             String username = user_field.getText();
-            try
-            {
+//            try
+//            {
 //                password = Customer.HashPassword(password);
                 Customer c = db.loginUser(username, password);
                 if(c==null)
@@ -1007,14 +1007,14 @@ public class MainFrame extends javax.swing.JFrame {
                     callHomePanel("Welcome");
                 }
                
-            }
-            catch(Exception e)
-            {
+//            }
+//            catch(Exception e)
+//            {
                 System.out.println("Err hereeee");
-                System.out.println(e);
+//                System.out.println(e);
                 err_signin_label.setText("Something went wrong");
                 err_signin_label.setVisible(true);
-            }
+//            }
             /*
             Customer tempCustomer = DBMSUtils.checkLogin(username,password);
             if(tempCustomer != NULL)
