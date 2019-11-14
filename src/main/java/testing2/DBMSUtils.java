@@ -288,7 +288,7 @@ public class DBMSUtils
                             set("trip_end", start+trip_time), set("assigned_driver", d.username),
                             set("trip_end", start+trip_time), set("assigned_driver", d.username),
                             set("location", end_loc), set("trip_price", price),
-                            set("prev_location", d.assignedCustomer.start_loc)));
+                            set("prev_location", d.assignedCustomer.old_loc)));
                 }
                 MongoCollection<Document> drivers = db.getCollection("drivers");
                 cursor = drivers.find(eq("name", d.username)).first();
@@ -460,9 +460,9 @@ public class DBMSUtils
             while(cursor.hasNext())
             {
                 Document temp = cursor.next();
-                String uname = (String)cursor.get("name");
+                String uname = (String)temp.get("name");
                 n = rand.nextInt(5);
-                drivers.updateOne(eq("name", d.username), set("location", locs[n]));
+                drivers.updateOne(eq("name", uname), set("location", locs[n]));
             }
             cursor.close();
             return true;
