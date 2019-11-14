@@ -17,6 +17,7 @@ import static com.mongodb.client.model.Updates.*;
 import com.mongodb.client.result.UpdateResult;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class DBMSUtils
 {
@@ -441,5 +442,32 @@ public class DBMSUtils
             return null;
         }
         return d;
+    }
+
+    public boolean redistributeDrivers()
+    {
+        try
+        {
+            Random rand = new Random();
+            String locs[] = new String[5];
+            int n;
+            locs[0] = "A"; locs[1] = "B"; locs[2] = "C"; locs[3] = "D"; locs[4] = "E";
+            MongoCollection<Document> drivers = db.getCollection("drivers");
+            MongoCursor<Document> cursor = drivers.find(eq("in_trip", false)).iterator();
+            while(cursor.hasNext())
+            {
+                Document temp = cursor.next();
+                String uname = (String)cursor.get("name");
+                n = rand.nextInt(5);
+                drivers.updateOne(eq("name", d.username), set("location", locs[n]));
+            }
+            cursor.close();
+            return true;
+        }
+        catch(Exception e)
+        {
+            System.out.println("Failed to redistribute drivers : " + e);
+            return false;
+        }
     }
 }
