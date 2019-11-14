@@ -869,6 +869,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         jMenuItem1.setText("Home");
         jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem1MouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jMenuItem1MousePressed(evt);
             }
@@ -1230,6 +1233,10 @@ public class MainFrame extends javax.swing.JFrame {
         }
         callHomePanel();
     }//GEN-LAST:event_jMenuItem1MousePressed
+
+    private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1MouseClicked
 
     
     public void createDrivers()

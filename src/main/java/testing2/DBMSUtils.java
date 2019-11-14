@@ -473,4 +473,20 @@ public class DBMSUtils
             return false;
         }
     }
+    
+    public boolean updateDriverRating(Driver d, int new_rating)
+    {
+        d.rating = (d.rating + new_rating)/d.n_rides;
+        MongoCollection<Document> drivers = db.getCollection("drivers");
+        Document cursor = drivers.find(eq("name", d.username)).first();
+        if(cursor == null)
+        {
+            return false;
+        }
+        else
+        {
+            drivers.updateOne(eq("name", d.username), set("rating", d.rating));
+        }
+        return true;
+    }
 }
