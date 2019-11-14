@@ -31,7 +31,8 @@ public class DBMSUtils
         password = "varsha123";
         try
         {
-            mc = MongoClients.create("mongodb+srv://varundb:"+password+"@cluster0-oi5zy.mongodb.net/test?retryWrites=true&w=majority"); // Create database at localhost:27017
+            //mc = MongoClients.create("mongodb+srv://varundb:"+password+"@cluster0-oi5zy.mongodb.net/test?retryWrites=true&w=majority"); // Create database at localhost:27017
+            mc = MongoClients.create();
             db = mc.getDatabase("users");
         }
         catch(Exception e)
@@ -342,8 +343,8 @@ public class DBMSUtils
 
     public Customer loginUser(String username, String password)
     {
-//        try
-//        {
+        try
+        {
             MongoCollection<Document> customers = db.getCollection("customers");
             Document cursor = customers.find(and(eq("name", username), eq("password", password))).first();
             System.out.println(cursor);
@@ -369,13 +370,13 @@ public class DBMSUtils
                 
                 return c;
             }
-//        }
-//        catch(Exception e)
-//        {
+        }
+        catch(Exception e)
+        {
 //            System.out.println("ERRRRRRR");
-//            System.out.println(e);
-//            return null;
-//        }
+            System.out.println(e);
+            return null;
+        }
     }
     public boolean addMoney(Customer c, double amount)
     {

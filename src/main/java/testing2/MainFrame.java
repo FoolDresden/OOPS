@@ -1005,10 +1005,11 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_sign_out_menuitemMouseClicked
 
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jMenu1MouseClicked
 
     private void sign_out_menuitemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sign_out_menuitemMousePressed
+        c1=null;
         callInitFrame();
 //        System.out.println("clicked");
 //        CardLayout cards=(CardLayout)mainPanel.getLayout();
@@ -1323,9 +1324,12 @@ public class MainFrame extends javax.swing.JFrame {
     private void jMenuItem1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MousePressed
         if(c1==null)
         {
-            return;
+            return;            
         }
-        callHomePanel();
+        else
+        {
+            callHomePanel();
+        }
     }//GEN-LAST:event_jMenuItem1MousePressed
 
     private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
