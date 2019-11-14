@@ -431,7 +431,7 @@ public class DBMSUtils
                 Customer c = getCustomerDetails((String)temp.get("name"));
                 Driver x = c.assignedDriver;
                 endTrip(x);
-                if(x.rating >= rating)
+                if(x.rating >= rating && x.loc == loc)
                 {
                     d = getDriverDetails(x.username);
                 }
