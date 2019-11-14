@@ -11,6 +11,7 @@ import java.io.File;
 import javax.swing.ImageIcon;
 import javax.imageio.ImageIO;
 import java.io.*;
+import java.util.regex.*;
 /**
  *
  * @author shrey
@@ -59,11 +60,11 @@ public class MainFrame extends javax.swing.JFrame {
     }
     private void callHomePanel()
     {
-//        if((++refreshes % 11) == 0 && refreshes != 0)
-//        {
-//            refreshes = 0;
-//            db.redistributeDrivers();
-//        }
+        if((++refreshes % 2) == 0 && refreshes != 0)
+        {
+            refreshes = 0;
+            db.redistributeDrivers();
+        }
         username_label.setText(getUsername());
         boolean prevIsInTrip = c1.isInTrip;
         if(prevIsInTrip==true)
@@ -108,11 +109,11 @@ public class MainFrame extends javax.swing.JFrame {
     }
     private void callHomePanel(String msg)
     {
-//        if((++refreshes % 11) == 0 && refreshes != 0)
-//        {
-//            refreshes = 0;
-//            db.redistributeDrivers();
-//        }
+        if((++refreshes % 2) == 0 && refreshes != 0)
+        {
+            refreshes = 0;
+            db.redistributeDrivers();
+        }
         username_label.setText(getUsername());
         String msg2="<html><b><font size=4 face=\"Roboto\" color=\"white\">"+msg+"</font></b></html>";
 //        System.out.println("excey");
@@ -182,7 +183,8 @@ public class MainFrame extends javax.swing.JFrame {
         }
         int dist = getDistance(posA,posB);
         double price = dist*100;
-        long eta= dist*30000;
+        long eta= dist*10000;
+        System.out.println(eta);
         boolean prevIsInTrip = c1.isInTrip;
         if(prevIsInTrip==true)
         {
@@ -194,10 +196,16 @@ public class MainFrame extends javax.swing.JFrame {
 //            Driver d = db.getBestDriver();
             cabname_confirm_field.setText(c1.assignedDriver.username);
             rating_confirm_label.setVisible(true);
-            rating_confirm_field.setText(""+c1.assignedDriver.rating);
+            double rat=c1.assignedDriver.rating;
+            int ra=(int)(rat*100);
+            rat=(double)ra/100;
+            rating_confirm_field.setText(""+rat);
             rating_confirm_field.setVisible(true);
             cabname_confirm_field.setVisible(true);
-            time_confirm_field.setText(""+(((double)eta/60000))+" minutes");
+            double et=((double)eta/60000)*100;
+            int e=(int)et;
+            et=(double)e/100;
+            time_confirm_field.setText(""+(et)+" minutes");
             cost_confirm_field.setText(""+price);
             confirm_confirm_button.setVisible(false);
             err_confirm_label.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Tripping...</font></b></html>");
@@ -214,7 +222,10 @@ public class MainFrame extends javax.swing.JFrame {
             rating_confirm_field.setVisible(false);
             cabname_confirm_label.setVisible(false);
             cabname_confirm_field.setVisible(false);
-            time_confirm_field.setText(""+(((double)eta/60000))+" minutes");
+            double et=((double)eta/60000)*100;
+            int e=(int)et;
+            et=(double)e/100;
+            time_confirm_field.setText(""+(et)+" minutes");
             cost_confirm_field.setText(""+price);    
             confirm_confirm_button.setVisible(true);
             err_confirm_label.setVisible(false);
@@ -769,7 +780,7 @@ public class MainFrame extends javax.swing.JFrame {
         homePanel.add(home_err_label);
         home_err_label.setBounds(159, 114, 140, 40);
 
-        deets_home_button.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Check Details</font></b></html>");
+        deets_home_button.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Trip Details</font></b></html>");
         deets_home_button.setContentAreaFilled(false);
         deets_home_button.setBorder(null);
         deets_home_button.setVisible(false);
@@ -784,7 +795,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         homePanel.add(deets_home_button);
-        deets_home_button.setBounds(154, 273, 145, 41);
+        deets_home_button.setBounds(154, 273, 127, 41);
 
         jLabel8.setIcon(icon2);
         jLabel8.setVisible(true);
@@ -1126,6 +1137,16 @@ public class MainFrame extends javax.swing.JFrame {
             err_reg_label.setVisible(true);  
             return;
         }
+        String regex = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        System.out.println("Matching: "+matcher.matches());
+        if(!matcher.matches())
+        {
+            err_reg_label.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Not valid email</font></b></html>");
+            err_reg_label.setVisible(true); 
+            return;
+        }
         Customer c = new Customer(username, pass);
         System.out.println(c.password);
         if(!db.createNewUser(c))
@@ -1255,7 +1276,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         int dist = getDistance(posA,posB);
         double price = dist*100;
-        long eta= dist*30000;
+        long eta= dist*10000;
         if(price<=c1.w.money)
         {
             d.assignedCustomer = c1;

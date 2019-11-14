@@ -766,7 +766,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="deets_home_button">
               <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;&lt;font size=5 face=&quot;Roboto&quot; color=&quot;white&quot;&gt;Check Details&lt;/font&gt;&lt;/b&gt;&lt;/html&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;&lt;font size=5 face=&quot;Roboto&quot; color=&quot;white&quot;&gt;Trip Details&lt;/font&gt;&lt;/b&gt;&lt;/html&gt;"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="deets_home_buttonMouseClicked"/>

@@ -31,8 +31,8 @@ public class DBMSUtils
         password = "varsha123";
         try
         {
-            //mc = MongoClients.create("mongodb+srv://varundb:"+password+"@cluster0-oi5zy.mongodb.net/test?retryWrites=true&w=majority"); // Create database at localhost:27017
-            mc = MongoClients.create();
+            mc = MongoClients.create("mongodb+srv://varundb:"+password+"@cluster0-oi5zy.mongodb.net/test?retryWrites=true&w=majority"); // Create database at localhost:27017
+//            mc = MongoClients.create();
             db = mc.getDatabase("users");
         }
         catch(Exception e)
