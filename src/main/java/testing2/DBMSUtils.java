@@ -419,6 +419,7 @@ public class DBMSUtils
                 if(Double.valueOf(""+temp.get("rating")) >= rating)
                 {
                     d = getDriverDetails((String)temp.get("name"));
+                    rating = Double.valueOf(""+temp.get("rating"));
                 }
             }
             cursor.close();
@@ -435,6 +436,7 @@ public class DBMSUtils
                 if(x.rating >= rating && x.loc == loc)
                 {
                     d = getDriverDetails(x.username);
+                    rating = Double.valueOf(""+temp.get("rating"));
                 }
             }
             cursor1.close();
