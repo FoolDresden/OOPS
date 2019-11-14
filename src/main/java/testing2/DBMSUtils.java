@@ -211,6 +211,7 @@ public class DBMSUtils
         {
             d.isInTrip = false;
             d.assignedCustomer.isInTrip = false;
+            d.assignedCustomer.old_loc = d.assignedCustomer.loc;
             d.n_rides += 1;
             try
             {
@@ -261,15 +262,16 @@ public class DBMSUtils
         }
     }
 
-    public boolean startTrip(Driver d, double price, long trip_time, String loc)
+    public boolean startTrip(Driver d, double price, long trip_time, String end_loc, String start_loc)
     {
         if(d.isInTrip == false)
         {
             d.isInTrip = true;
             d.assignedCustomer.isInTrip = true;
             d.assignedCustomer.assignedDriver = d;
-            d.assignedCustomer.loc = loc;
-            d.loc = loc;
+            d.assignedCustomer.loc = end_loc;
+            d.loc = end_loc;
+            d.assignedCustomer.old_loc = start_loc;
             try
             {
                 MongoCollection<Document> customers = db.getCollection("customers");
@@ -285,7 +287,8 @@ public class DBMSUtils
                         combine(set("in_trip", true), set("trip_start", start),
                             set("trip_end", start+trip_time), set("assigned_driver", d.username),
                             set("trip_end", start+trip_time), set("assigned_driver", d.username),
-                            set("location", loc), set("trip_price", price)));
+                            set("location", end_loc), set("trip_price", price),
+                            set("prev_location", d.assignedCustomer.start_loc)));
                 }
                 MongoCollection<Document> drivers = db.getCollection("drivers");
                 cursor = drivers.find(eq("name", d.username)).first();
@@ -297,7 +300,7 @@ public class DBMSUtils
                 {
                     drivers.updateOne(eq("name", d.username), combine(set("in_trip", true),
                                       set("assigned_customer", d.assignedCustomer.username),
-                                      set("location", loc)));
+                                      set("location", end_loc)));
                 }
                 return true;
             }
