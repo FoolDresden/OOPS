@@ -138,6 +138,11 @@ public class MainFrame extends javax.swing.JFrame {
     
     private void callConfirmPanel()
     {
+        if(posA.equals("")||posB.equals(""))
+        {
+            posA=c1.old_loc;
+            posB=c1.loc;
+        }
         int dist = getDistance(posA,posB);
         double price = dist*100;
         long eta= dist*30000;
@@ -146,15 +151,20 @@ public class MainFrame extends javax.swing.JFrame {
             cabname_confirm_label.setVisible(true);
 //            Driver d = db.getBestDriver();
             cabname_confirm_field.setText(c1.assignedDriver.username);
+            rating_confirm_label.setVisible(true);
+            rating_confirm_field.setText(""+c1.assignedDriver.rating);
+            rating_confirm_field.setVisible(true);
             cabname_confirm_field.setVisible(true);
-            time_confirm_field.setText(eta());
-            cost_confirm_field.setText(""+Location.getEstimate(3.14, 69.420));
+            time_confirm_field.setText(""+eta);
+            cost_confirm_field.setText(""+price);
             confirm_confirm_button.setVisible(false);
             err_confirm_label.setText("Tripping..");
             err_confirm_label.setVisible(true);
         }
         else
         {
+            rating_confirm_label.setVisible(false);
+            rating_confirm_field.setVisible(false);
             cabname_confirm_label.setVisible(false);
             cabname_confirm_field.setVisible(false);
             time_confirm_field.setText(""+eta);
@@ -296,6 +306,8 @@ public class MainFrame extends javax.swing.JFrame {
         bal_confirm_panel = new javax.swing.JLabel();
         bal_confirm_field = new javax.swing.JTextField();
         err_confirm_label = new javax.swing.JLabel();
+        rating_confirm_label = new javax.swing.JLabel();
+        rating_confirm_field = new javax.swing.JTextField();
         homePanel = new javax.swing.JPanel();
         home_book_button = new javax.swing.JButton();
         add_home_button = new javax.swing.JButton();
@@ -438,10 +450,10 @@ public class MainFrame extends javax.swing.JFrame {
         reset.setBounds(206, 200, 100, 38);
 
         err_signin_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        err_signin_label.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Error</font></b></html>");
+        err_signin_label.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Error</font></b></html>");
         err_signin_label.setVisible(false);
         signinPanel.add(err_signin_label);
-        err_signin_label.setBounds(145, 232, 129, 69);
+        err_signin_label.setBounds(140, 240, 129, 69);
 
         jLabel5.setIcon(icon2);
         jLabel5.setVisible(true);
@@ -578,6 +590,10 @@ public class MainFrame extends javax.swing.JFrame {
         err_confirm_label.setText("ERROR");
         err_confirm_label.setVisible(false);
 
+        rating_confirm_label.setText("Rating");
+
+        rating_confirm_field.setEditable(false);
+
         javax.swing.GroupLayout confirmPanelLayout = new javax.swing.GroupLayout(confirmPanel);
         confirmPanel.setLayout(confirmPanelLayout);
         confirmPanelLayout.setHorizontalGroup(
@@ -590,22 +606,24 @@ public class MainFrame extends javax.swing.JFrame {
                             .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(time_confirm_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(cabname_confirm_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(cost_confirm_label, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(home_confirm_button, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bal_confirm_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(bal_confirm_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rating_confirm_label, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cost_confirm_label, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(confirmPanelLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(bal_confirm_field, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-                                    .addComponent(cabname_confirm_field, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(time_confirm_field, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cost_confirm_field, javax.swing.GroupLayout.Alignment.LEADING)))
                             .addGroup(confirmPanelLayout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(confirm_confirm_button, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(50, 50, 50)
-                                .addComponent(wallet_confirm_button, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(wallet_confirm_button, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(confirmPanelLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(bal_confirm_field, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                                    .addComponent(cabname_confirm_field)
+                                    .addComponent(time_confirm_field)
+                                    .addComponent(cost_confirm_field)
+                                    .addComponent(rating_confirm_field)))))
                     .addGroup(confirmPanelLayout.createSequentialGroup()
                         .addGap(76, 76, 76)
                         .addComponent(err_confirm_label, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -618,26 +636,30 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cabname_confirm_label, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cabname_confirm_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(time_confirm_label, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(time_confirm_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cost_confirm_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cost_confirm_label, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(cost_confirm_label, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cost_confirm_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bal_confirm_panel)
-                    .addComponent(bal_confirm_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                    .addComponent(bal_confirm_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bal_confirm_panel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rating_confirm_label, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rating_confirm_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
                 .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(home_confirm_button)
                     .addComponent(confirm_confirm_button)
                     .addComponent(wallet_confirm_button))
                 .addGap(35, 35, 35)
                 .addComponent(err_confirm_label)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         mainPanel.add(confirmPanel, "confirmPanel");
@@ -981,7 +1003,8 @@ public class MainFrame extends javax.swing.JFrame {
 //        System.out.println(str);
         if(user_field.getText().equals("")||new String(pass_field.getPassword()).equals(""))
         {
-            err_signin_label.setText("Empty fields");
+            String msg="<html><b><font size=5 face=Roboto color=white>Empty Fields</font></b></html>";
+            err_signin_label.setText(msg);
             err_signin_label.setVisible(true);
 //            CardLayout cards=(CardLayout)mainPanel.getLayout();
 //            errLabel.setText("Hiii !Shreyam");
@@ -1000,13 +1023,14 @@ public class MainFrame extends javax.swing.JFrame {
                 System.out.println("No such algorithm");
             }
             String username = user_field.getText();
-//            try
-//            {
+            try
+            {
 //                password = Customer.HashPassword(password);
                 Customer c = db.loginUser(username, password);
                 if(c==null)
                 {
-                    err_signin_label.setText("Wrong creds");
+                    String msg="<html><b><font size=5 face=Roboto color=white>Wrong Creds</font></b></html>";
+                    err_signin_label.setText(msg);
                     err_signin_label.setVisible(true);   
                     return;
                 }
@@ -1017,14 +1041,15 @@ public class MainFrame extends javax.swing.JFrame {
                     callHomePanel("Welcome");
                 }
                
-//            }
-//            catch(Exception e)
-//            {
+            }
+            catch(Exception e)
+            {
                 System.out.println("Err hereeee");
 //                System.out.println(e);
-                err_signin_label.setText("Something went wrong");
+                String msg="<html><b><font size=5 face=Roboto color=white>OOPS! Please try again</font></b></html>";
+                err_signin_label.setText(msg);
                 err_signin_label.setVisible(true);
-//            }
+            }
             /*
             Customer tempCustomer = DBMSUtils.checkLogin(username,password);
             if(tempCustomer != NULL)
@@ -1220,7 +1245,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_NewUserButtonMouseClicked
 
     private void ExistingUserButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExistingUserButtonMouseClicked
-        createDrivers();
+//        createDrivers();
         callSignInPanel();
         //        CardLayout cards=(CardLayout)mainPanel.getLayout();
         //        cards.show(mainPanel, "signinPanel");
@@ -1343,6 +1368,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel pass_reg_label;
     private javax.swing.JPasswordField pass_wallet_field;
     private javax.swing.JLabel pass_wallet_label;
+    private javax.swing.JTextField rating_confirm_field;
+    private javax.swing.JLabel rating_confirm_label;
     private javax.swing.JButton reg_button;
     private javax.swing.JPanel registerPanel;
     private javax.swing.JButton reset;

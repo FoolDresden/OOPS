@@ -287,14 +287,14 @@
             <Component class="javax.swing.JLabel" name="err_signin_label">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;&lt;font size=4 face=&quot;Roboto&quot; color=&quot;white&quot;&gt;Error&lt;/font&gt;&lt;/b&gt;&lt;/html&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;b&gt;&lt;font size=5 face=&quot;Roboto&quot; color=&quot;white&quot;&gt;Error&lt;/font&gt;&lt;/b&gt;&lt;/html&gt;"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="err_signin_label.setVisible(false);"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="145" y="232" width="129" height="69"/>
+                  <AbsoluteConstraints x="140" y="240" width="129" height="69"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -459,25 +459,27 @@
                                       <Component id="time_confirm_label" max="32767" attributes="0"/>
                                       <Component id="cabname_confirm_label" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="cost_confirm_label" alignment="0" min="-2" pref="56" max="-2" attributes="0"/>
                                   <Component id="home_confirm_button" alignment="0" min="-2" pref="69" max="-2" attributes="0"/>
                                   <Component id="bal_confirm_panel" alignment="0" min="-2" pref="79" max="-2" attributes="0"/>
+                                  <Component id="rating_confirm_label" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
+                                  <Component id="cost_confirm_label" alignment="0" min="-2" pref="56" max="-2" attributes="0"/>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="bal_confirm_field" alignment="0" pref="143" max="32767" attributes="0"/>
-                                          <Component id="cabname_confirm_field" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="time_confirm_field" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="cost_confirm_field" alignment="0" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                       <Component id="confirm_confirm_button" min="-2" pref="69" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                                       <Component id="wallet_confirm_button" min="-2" pref="69" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="bal_confirm_field" alignment="0" pref="143" max="32767" attributes="0"/>
+                                          <Component id="cabname_confirm_field" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="time_confirm_field" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="cost_confirm_field" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="rating_confirm_field" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                           </Group>
@@ -498,22 +500,27 @@
                           <Component id="cabname_confirm_label" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                           <Component id="cabname_confirm_field" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="time_confirm_label" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                           <Component id="time_confirm_field" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="cost_confirm_field" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cost_confirm_label" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                          <Component id="cost_confirm_field" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="bal_confirm_panel" min="-2" max="-2" attributes="0"/>
                           <Component id="bal_confirm_field" min="-2" max="-2" attributes="0"/>
+                          <Component id="bal_confirm_panel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="rating_confirm_label" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="rating_confirm_field" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="home_confirm_button" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="confirm_confirm_button" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -521,7 +528,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="err_confirm_label" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="38" max="32767" attributes="0"/>
+                      <EmptySpace pref="28" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -605,6 +612,16 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="err_confirm_label.setVisible(false);"/>
               </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="rating_confirm_label">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Rating"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="rating_confirm_field">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
