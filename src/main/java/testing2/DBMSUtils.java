@@ -460,9 +460,9 @@ public class DBMSUtils
             while(cursor.hasNext())
             {
                 Document temp = cursor.next();
-                String uname = (String)cursor.get("name");
+                String uname = (String)temp.get("name");
                 n = rand.nextInt(5);
-                drivers.updateOne(eq("name", d.username), set("location", locs[n]));
+                drivers.updateOne(eq("name", uname), set("location", locs[n]));
             }
             cursor.close();
             return true;
