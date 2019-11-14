@@ -12,6 +12,7 @@ class Customer extends User
     String loc;
     boolean isInTrip;
     Driver assignedDriver;
+    String old_loc;
     
     Customer()
     {
@@ -19,6 +20,7 @@ class Customer extends User
         loc = "A";
         isInTrip = false;
         assignedDriver = null;
+        old_loc = "A";
     }
     Customer(String user, String pass)
     {
@@ -36,6 +38,7 @@ class Customer extends User
         loc = "A";
         isInTrip = false;
         assignedDriver = null;
+        old_loc = "A";
     }
    
 
