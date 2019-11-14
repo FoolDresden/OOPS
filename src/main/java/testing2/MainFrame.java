@@ -61,7 +61,8 @@ public class MainFrame extends javax.swing.JFrame {
             wallet_status_label.setText(getWallet());            
             deets_home_button.setVisible(true);
             home_book_button.setEnabled(false); 
-            home_err_label.setText("Trip ongoing...");
+            String msg="<html><b><font size=4 face=\"Roboto\" color=\"white\">Trip ongoing...</font></b></html>";
+            home_err_label.setText(msg);
             home_err_label.setVisible(true);
         }
         else{
@@ -71,7 +72,8 @@ public class MainFrame extends javax.swing.JFrame {
         {
             deets_home_button.setVisible(false);
             home_book_button.setEnabled(false); 
-            home_err_label.setText("Less Money in Wallet. Please Add Money...");
+            String msg="<html><b><font size=4 face=\"Roboto\" color=\"white\">Less Money</font></b></html>";
+            home_err_label.setText(msg);
             home_err_label.setVisible(true);
         }
         else
@@ -86,7 +88,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void callHomePanel(String msg)
     {
         username_label.setText(getUsername());
-        
+        String msg2="<html><b><font size=4 face=\"Roboto\" color=\"white\">"+msg+"</font></b></html>";
 //        System.out.println("excey");
         
         System.out.println(db.getTripStatus(c1));
@@ -95,7 +97,7 @@ public class MainFrame extends javax.swing.JFrame {
             wallet_status_label.setText(getWallet());
             deets_home_button.setVisible(true);
             home_book_button.setEnabled(false); 
-            home_err_label.setText(msg);
+            home_err_label.setText(msg2);
             home_err_label.setVisible(true);
         }
         else{
@@ -105,14 +107,14 @@ public class MainFrame extends javax.swing.JFrame {
         {
             deets_home_button.setVisible(false);
             home_book_button.setEnabled(false); 
-            home_err_label.setText(msg);
+            home_err_label.setText(msg2);
             home_err_label.setVisible(true);
         }
         else
         {
             deets_home_button.setVisible(false);
             home_book_button.setEnabled(true); 
-            home_err_label.setText(msg);
+            home_err_label.setText(msg2);
             home_err_label.setVisible(true);            
         }}
         CardLayout cards=(CardLayout)mainPanel.getLayout();
@@ -158,7 +160,7 @@ public class MainFrame extends javax.swing.JFrame {
             time_confirm_field.setText(""+eta);
             cost_confirm_field.setText(""+price);
             confirm_confirm_button.setVisible(false);
-            err_confirm_label.setText("Tripping..");
+            err_confirm_label.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Tripping...</font></b></html>");
             err_confirm_label.setVisible(true);
         }
         else
@@ -172,6 +174,9 @@ public class MainFrame extends javax.swing.JFrame {
             confirm_confirm_button.setVisible(true);
             err_confirm_label.setVisible(false);
         }
+        bal_confirm_field.setText(""+c1.w.getMoney());
+        bal_confirm_field.setVisible(true);
+        bal_confirm_panel.setVisible(true);
         
 //        cabname_confirm_field.setText("CABBI");
 //        time_confirm_field.setText("180 days");
@@ -293,6 +298,7 @@ public class MainFrame extends javax.swing.JFrame {
         reg_button = new javax.swing.JButton();
         reset_reg_button = new javax.swing.JButton();
         err_reg_label = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         confirmPanel = new javax.swing.JPanel();
         cabname_confirm_label = new javax.swing.JLabel();
         cabname_confirm_field = new javax.swing.JTextField();
@@ -308,6 +314,7 @@ public class MainFrame extends javax.swing.JFrame {
         err_confirm_label = new javax.swing.JLabel();
         rating_confirm_label = new javax.swing.JLabel();
         rating_confirm_field = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
         homePanel = new javax.swing.JPanel();
         home_book_button = new javax.swing.JButton();
         add_home_button = new javax.swing.JButton();
@@ -317,6 +324,7 @@ public class MainFrame extends javax.swing.JFrame {
         wallet_status_label = new javax.swing.JTextField();
         home_err_label = new javax.swing.JLabel();
         deets_home_button = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
         walletPanel = new javax.swing.JPanel();
         bal_wallet_label = new javax.swing.JLabel();
         bal_wallet_field = new javax.swing.JTextField();
@@ -327,6 +335,7 @@ public class MainFrame extends javax.swing.JFrame {
         add_wallet_button = new javax.swing.JButton();
         home_wallet_button = new javax.swing.JButton();
         err_wallet_label = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         cabBookPanel = new javax.swing.JPanel();
         from_combobox = new javax.swing.JComboBox<>();
         to_combobox = new javax.swing.JComboBox<>();
@@ -335,6 +344,7 @@ public class MainFrame extends javax.swing.JFrame {
         book_book_button = new javax.swing.JButton();
         home_bookPanel_button = new javax.swing.JButton();
         err_book_label = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -345,8 +355,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
         mainPanel.setLayout(new java.awt.CardLayout());
-
-        initPanel.setLayout(null);
 
         ExistingUserButton.setBackground(new java.awt.Color(0, 0, 0));
         ExistingUserButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -364,8 +372,6 @@ public class MainFrame extends javax.swing.JFrame {
                 ExistingUserButtonActionPerformed(evt);
             }
         });
-        initPanel.add(ExistingUserButton);
-        ExistingUserButton.setBounds(120, 100, 215, 80);
 
         NewUserButton.setBackground(new java.awt.Color(0, 255, 255));
         NewUserButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -378,8 +384,6 @@ public class MainFrame extends javax.swing.JFrame {
                 NewUserButtonMouseClicked(evt);
             }
         });
-        initPanel.add(NewUserButton);
-        NewUserButton.setBounds(120, 200, 215, 80);
 
         img.setBackground(new java.awt.Color(255, 255, 255));
         img.setForeground(java.awt.SystemColor.controlHighlight);
@@ -389,18 +393,46 @@ public class MainFrame extends javax.swing.JFrame {
         ImageIcon icon=new ImageIcon(scaled);
         img.setIcon(icon);
         img.setVisible(true);
-        initPanel.add(img);
-        img.setBounds(10, 6, 131, 60);
 
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("<html><b><font size=4 face=\"Proxima Nova\" color=\"White\">Book a ride without breaking a stride!!!!!</font></b></html>");
-        initPanel.add(jLabel3);
-        jLabel3.setBounds(147, 0, 300, 66);
 
         sideImg.setFocusable(false);
-        initPanel.add(sideImg);
-        sideImg.setBounds(0, 1, 460, 340);
+
+        javax.swing.GroupLayout initPanelLayout = new javax.swing.GroupLayout(initPanel);
+        initPanel.setLayout(initPanelLayout);
+        initPanelLayout.setHorizontalGroup(
+            initPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(initPanelLayout.createSequentialGroup()
+                .addGap(120, 120, 120)
+                .addComponent(ExistingUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(initPanelLayout.createSequentialGroup()
+                .addGap(120, 120, 120)
+                .addComponent(NewUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(initPanelLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(img, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(initPanelLayout.createSequentialGroup()
+                .addGap(147, 147, 147)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(sideImg, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        initPanelLayout.setVerticalGroup(
+            initPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(initPanelLayout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addComponent(ExistingUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(NewUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(initPanelLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(img, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(initPanelLayout.createSequentialGroup()
+                .addGap(1, 1, 1)
+                .addComponent(sideImg, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         mainPanel.add(initPanel, "initPanel");
 
@@ -458,19 +490,45 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel5.setIcon(icon2);
         jLabel5.setVisible(true);
         signinPanel.add(jLabel5);
-        jLabel5.setBounds(0, 0, 460, 340);
+        jLabel5.setBounds(0, 0, 480, 340);
 
         mainPanel.add(signinPanel, "signinPanel");
 
-        name_label.setText("Username");
+        registerPanel.setLayout(null);
 
-        email_label.setText("Email");
+        name_text.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                name_textActionPerformed(evt);
+            }
+        });
+        registerPanel.add(name_text);
+        name_text.setBounds(110, 30, 250, 30);
+        registerPanel.add(email_text);
+        email_text.setBounds(110, 70, 250, 30);
 
-        pass_reg_label.setText("Password");
+        name_label.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Username</font></b></html>");
+        registerPanel.add(name_label);
+        name_label.setBounds(20, 30, 64, 30);
 
-        jLabel4.setText("Retype Password");
+        email_label.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Email</font></b></html>");
+        registerPanel.add(email_label);
+        email_label.setBounds(20, 70, 50, 30);
 
-        reg_button.setText("Register");
+        pass_reg_label.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Password</font></b></html>");
+        registerPanel.add(pass_reg_label);
+        pass_reg_label.setBounds(20, 110, 64, 30);
+
+        jLabel4.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Retype Password</font></b></html>");
+        registerPanel.add(jLabel4);
+        jLabel4.setBounds(20, 150, 90, 30);
+        registerPanel.add(pass_reg_field);
+        pass_reg_field.setBounds(110, 110, 250, 30);
+        registerPanel.add(retypepass_reg_field);
+        retypepass_reg_field.setBounds(110, 150, 250, 30);
+
+        reg_button.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Register</font></b></html>");
+        reg_button.setContentAreaFilled(false);
+        reg_button.setBorder(null);
         reg_button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 reg_buttonMouseClicked(evt);
@@ -479,192 +537,138 @@ public class MainFrame extends javax.swing.JFrame {
                 reg_buttonMouseEntered(evt);
             }
         });
+        registerPanel.add(reg_button);
+        reg_button.setBounds(110, 200, 100, 50);
 
-        reset_reg_button.setText("Reset");
+        reset_reg_button.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Reset</font></b></html>");
+        reset_reg_button.setContentAreaFilled(false);
+        reset.setBorder(null);
         reset_reg_button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 reset_reg_buttonMouseClicked(evt);
             }
         });
+        registerPanel.add(reset_reg_button);
+        reset_reg_button.setBounds(250, 200, 100, 50);
 
         err_reg_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        err_reg_label.setText("ERROR");
+        err_reg_label.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Error</font></b></html>");
         err_reg_label.setVisible(false);
+        registerPanel.add(err_reg_label);
+        err_reg_label.setBounds(100, 270, 247, 40);
 
-        javax.swing.GroupLayout registerPanelLayout = new javax.swing.GroupLayout(registerPanel);
-        registerPanel.setLayout(registerPanelLayout);
-        registerPanelLayout.setHorizontalGroup(
-            registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(registerPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(email_label, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(name_label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                        .addComponent(pass_reg_label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(28, 28, 28)
-                .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(err_reg_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pass_reg_field)
-                    .addComponent(name_text)
-                    .addComponent(email_text)
-                    .addGroup(registerPanelLayout.createSequentialGroup()
-                        .addComponent(reg_button)
-                        .addGap(18, 18, 18)
-                        .addComponent(reset_reg_button)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(retypepass_reg_field))
-                .addGap(68, 68, 68))
-        );
-        registerPanelLayout.setVerticalGroup(
-            registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(registerPanelLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(name_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(name_label))
-                .addGap(15, 15, 15)
-                .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(email_label)
-                    .addComponent(email_text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pass_reg_label)
-                    .addComponent(pass_reg_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(retypepass_reg_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(reg_button, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                    .addComponent(reset_reg_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(err_reg_label)
-                .addContainerGap(97, Short.MAX_VALUE))
-        );
+        jLabel6.setIcon(icon2);
+        jLabel6.setVisible(true);
+        registerPanel.add(jLabel6);
+        jLabel6.setBounds(0, 0, 480, 340);
 
         mainPanel.add(registerPanel, "registerPanel");
 
-        cabname_confirm_label.setText("Cabbie");
+        confirmPanel.setLayout(null);
+
+        cabname_confirm_label.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Cabbie</font></b></html>");
+        confirmPanel.add(cabname_confirm_label);
+        cabname_confirm_label.setBounds(20, 10, 103, 39);
 
         cabname_confirm_field.setEditable(false);
+        confirmPanel.add(cabname_confirm_field);
+        cabname_confirm_field.setBounds(150, 10, 170, 30);
 
-        time_confirm_label.setText("Approx duration of trip");
+        time_confirm_label.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Duration</font></b></html>");
+        confirmPanel.add(time_confirm_label);
+        time_confirm_label.setBounds(20, 50, 110, 30);
 
-        cost_confirm_label.setText("Cost of Trip");
+        cost_confirm_label.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Cost</font></b></html>");
+        confirmPanel.add(cost_confirm_label);
+        cost_confirm_label.setBounds(20, 90, 80, 30);
 
         time_confirm_field.setEditable(false);
+        confirmPanel.add(time_confirm_field);
+        time_confirm_field.setBounds(150, 50, 170, 30);
 
         cost_confirm_field.setEditable(false);
+        confirmPanel.add(cost_confirm_field);
+        cost_confirm_field.setBounds(150, 90, 170, 30);
 
-        home_confirm_button.setText("Home");
+        home_confirm_button.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Home</font></b></html>");
+        home_confirm_button.setContentAreaFilled(false);
+        home_confirm_button.setBorder(null);
         home_confirm_button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 home_confirm_buttonMouseClicked(evt);
             }
         });
+        home_confirm_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                home_confirm_buttonActionPerformed(evt);
+            }
+        });
+        confirmPanel.add(home_confirm_button);
+        home_confirm_button.setBounds(20, 220, 90, 50);
 
-        wallet_confirm_button.setText("Wallet");
+        wallet_confirm_button.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Wallet</font></b></html>");
+        wallet_confirm_button.setContentAreaFilled(false);
+        wallet_confirm_button.setBorder(null);
         wallet_confirm_button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 wallet_confirm_buttonMouseClicked(evt);
             }
         });
+        confirmPanel.add(wallet_confirm_button);
+        wallet_confirm_button.setBounds(260, 220, 100, 50);
 
-        confirm_confirm_button.setText("Confirm");
+        confirm_confirm_button.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Confirm</font></b></html>");
+        confirm_confirm_button.setContentAreaFilled(false);
+        confirm_confirm_button.setBorder(null);
         confirm_confirm_button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 confirm_confirm_buttonMouseClicked(evt);
             }
         });
+        confirmPanel.add(confirm_confirm_button);
+        confirm_confirm_button.setBounds(140, 220, 100, 50);
 
-        bal_confirm_panel.setText("Wallet Balance");
+        bal_confirm_panel.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Balance</font></b></html>");
         bal_confirm_panel.setVisible(false);
+        confirmPanel.add(bal_confirm_panel);
+        bal_confirm_panel.setBounds(20, 130, 90, 30);
 
         bal_confirm_field.setEditable(false);
         bal_confirm_field.setVisible(false);
+        bal_confirm_field.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bal_confirm_fieldActionPerformed(evt);
+            }
+        });
+        confirmPanel.add(bal_confirm_field);
+        bal_confirm_field.setBounds(150, 130, 170, 30);
 
         err_confirm_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         err_confirm_label.setText("ERROR");
         err_confirm_label.setVisible(false);
+        confirmPanel.add(err_confirm_label);
+        err_confirm_label.setBounds(90, 290, 210, 30);
 
-        rating_confirm_label.setText("Rating");
+        rating_confirm_label.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Rating</font></b></html>");
+        confirmPanel.add(rating_confirm_label);
+        rating_confirm_label.setBounds(20, 170, 70, 30);
 
         rating_confirm_field.setEditable(false);
+        confirmPanel.add(rating_confirm_field);
+        rating_confirm_field.setBounds(150, 170, 170, 30);
 
-        javax.swing.GroupLayout confirmPanelLayout = new javax.swing.GroupLayout(confirmPanel);
-        confirmPanel.setLayout(confirmPanelLayout);
-        confirmPanelLayout.setHorizontalGroup(
-            confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(confirmPanelLayout.createSequentialGroup()
-                .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(confirmPanelLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(time_confirm_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cabname_confirm_label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(home_confirm_button, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bal_confirm_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rating_confirm_label, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cost_confirm_label, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(confirmPanelLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(confirm_confirm_button, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(50, 50, 50)
-                                .addComponent(wallet_confirm_button, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(confirmPanelLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(bal_confirm_field, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-                                    .addComponent(cabname_confirm_field)
-                                    .addComponent(time_confirm_field)
-                                    .addComponent(cost_confirm_field)
-                                    .addComponent(rating_confirm_field)))))
-                    .addGroup(confirmPanelLayout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addComponent(err_confirm_label, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(117, Short.MAX_VALUE))
-        );
-        confirmPanelLayout.setVerticalGroup(
-            confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(confirmPanelLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cabname_confirm_label, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cabname_confirm_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(time_confirm_label, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(time_confirm_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cost_confirm_label, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cost_confirm_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bal_confirm_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bal_confirm_panel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rating_confirm_label, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rating_confirm_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
-                .addGroup(confirmPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(home_confirm_button)
-                    .addComponent(confirm_confirm_button)
-                    .addComponent(wallet_confirm_button))
-                .addGap(35, 35, 35)
-                .addComponent(err_confirm_label)
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
+        jLabel7.setIcon(icon2);
+        jLabel7.setVisible(true);
+        confirmPanel.add(jLabel7);
+        jLabel7.setBounds(0, 0, 480, 340);
 
         mainPanel.add(confirmPanel, "confirmPanel");
 
-        home_book_button.setText("Book Cab");
+        homePanel.setLayout(null);
+
+        home_book_button.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Book Cab</font></b></html>");
+        home_book_button.setContentAreaFilled(false);
+        home_book_button.setBorder(null);
         home_book_button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 home_book_buttonMouseClicked(evt);
@@ -675,27 +679,45 @@ public class MainFrame extends javax.swing.JFrame {
                 home_book_buttonActionPerformed(evt);
             }
         });
+        homePanel.add(home_book_button);
+        home_book_button.setBounds(154, 164, 145, 44);
 
-        add_home_button.setText("Add Money");
+        add_home_button.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Add Money</font></b></html>");
+        add_home_button.setContentAreaFilled(false);
+        add_home_button.setBorder(null);
         add_home_button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 add_home_buttonMouseClicked(evt);
             }
         });
+        homePanel.add(add_home_button);
+        add_home_button.setBounds(154, 218, 145, 45);
 
-        jLabel1.setText("User");
+        jLabel1.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Username</font></b></html>");
+        homePanel.add(jLabel1);
+        jLabel1.setBounds(113, 20, 63, 32);
 
         username_label.setEditable(false);
+        homePanel.add(username_label);
+        username_label.setBounds(194, 20, 139, 32);
 
-        jLabel2.setText("Wallet");
+        jLabel2.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Wallet</font></b></html>");
+        homePanel.add(jLabel2);
+        jLabel2.setBounds(113, 70, 63, 38);
 
         wallet_status_label.setEditable(false);
+        homePanel.add(wallet_status_label);
+        wallet_status_label.setBounds(194, 70, 139, 30);
 
         home_err_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         home_err_label.setText("MoneyProblems");
         home_err_label.setVisible(false);
+        homePanel.add(home_err_label);
+        home_err_label.setBounds(159, 114, 140, 40);
 
-        deets_home_button.setText("Check Details");
+        deets_home_button.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Check Details</font></b></html>");
+        deets_home_button.setContentAreaFilled(false);
+        deets_home_button.setBorder(null);
         deets_home_button.setVisible(false);
         deets_home_button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -707,216 +729,131 @@ public class MainFrame extends javax.swing.JFrame {
                 deets_home_buttonActionPerformed(evt);
             }
         });
+        homePanel.add(deets_home_button);
+        deets_home_button.setBounds(154, 273, 145, 41);
 
-        javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
-        homePanel.setLayout(homePanelLayout);
-        homePanelLayout.setHorizontalGroup(
-            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(homePanelLayout.createSequentialGroup()
-                .addGap(154, 154, 154)
-                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(deets_home_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(add_home_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(home_book_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
-                .addGap(0, 101, Short.MAX_VALUE)
-                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(homePanelLayout.createSequentialGroup()
-                        .addComponent(home_err_label, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homePanelLayout.createSequentialGroup()
-                        .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(36, 36, 36)
-                        .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(wallet_status_label, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(username_label, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(127, 127, 127))))
-        );
-        homePanelLayout.setVerticalGroup(
-            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(homePanelLayout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(username_label))
-                .addGap(21, 21, 21)
-                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(wallet_status_label, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addComponent(home_err_label)
-                .addGap(18, 18, 18)
-                .addComponent(home_book_button)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(add_home_button)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(deets_home_button)
-                .addContainerGap(56, Short.MAX_VALUE))
-        );
+        jLabel8.setIcon(icon2);
+        jLabel8.setVisible(true);
+        homePanel.add(jLabel8);
+        jLabel8.setBounds(0, 0, 490, 340);
 
         mainPanel.add(homePanel, "homePanel");
 
-        bal_wallet_label.setText("Balance");
+        walletPanel.setLayout(null);
+
+        bal_wallet_label.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Balance</font></b></html>");
+        walletPanel.add(bal_wallet_label);
+        bal_wallet_label.setBounds(24, 24, 55, 33);
 
         bal_wallet_field.setEditable(false);
+        walletPanel.add(bal_wallet_field);
+        bal_wallet_field.setBounds(134, 29, 158, 26);
 
-        toAdd_wallet_label.setText("Money to add");
+        toAdd_wallet_label.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Money to add</font></b></html>");
+        walletPanel.add(toAdd_wallet_label);
+        toAdd_wallet_label.setBounds(24, 72, 92, 37);
 
         toAdd_wallet_field.setText("0");
+        walletPanel.add(toAdd_wallet_field);
+        toAdd_wallet_field.setBounds(134, 78, 158, 27);
 
-        pass_wallet_label.setText("Password");
+        pass_wallet_label.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Password</font></b></html>");
+        walletPanel.add(pass_wallet_label);
+        pass_wallet_label.setBounds(24, 133, 69, 23);
+        walletPanel.add(pass_wallet_field);
+        pass_wallet_field.setBounds(134, 131, 158, 29);
 
-        add_wallet_button.setText("Add Money");
+        add_wallet_button.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Add Money</font></b></html>");
+        add_wallet_button.setContentAreaFilled(false);
+        add_wallet_button.setBorder(null);
         add_wallet_button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 add_wallet_buttonMouseClicked(evt);
             }
         });
+        walletPanel.add(add_wallet_button);
+        add_wallet_button.setBounds(54, 193, 125, 49);
 
-        home_wallet_button.setText("Home");
+        home_wallet_button.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Home</font></b></html>");
+        home_wallet_button.setContentAreaFilled(false);
+        home_wallet_button.setBorder(null);
         home_wallet_button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 home_wallet_buttonMouseClicked(evt);
             }
         });
+        walletPanel.add(home_wallet_button);
+        home_wallet_button.setBounds(212, 193, 118, 49);
 
         err_wallet_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         err_wallet_label.setText("Error");
         err_wallet_label.setVisible(false);
+        walletPanel.add(err_wallet_label);
+        err_wallet_label.setBounds(132, 260, 136, 58);
 
-        javax.swing.GroupLayout walletPanelLayout = new javax.swing.GroupLayout(walletPanel);
-        walletPanel.setLayout(walletPanelLayout);
-        walletPanelLayout.setHorizontalGroup(
-            walletPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(walletPanelLayout.createSequentialGroup()
-                .addGroup(walletPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(walletPanelLayout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(walletPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(toAdd_wallet_label, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pass_wallet_label, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bal_wallet_label, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(walletPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(bal_wallet_field, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(walletPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(toAdd_wallet_field, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                                .addComponent(pass_wallet_field))))
-                    .addGroup(walletPanelLayout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addComponent(add_wallet_button)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(home_wallet_button, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(52, 52, 52))
-            .addGroup(walletPanelLayout.createSequentialGroup()
-                .addGap(173, 173, 173)
-                .addComponent(err_wallet_label, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        walletPanelLayout.setVerticalGroup(
-            walletPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(walletPanelLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(walletPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bal_wallet_label, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bal_wallet_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(walletPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(toAdd_wallet_label, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(toAdd_wallet_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(walletPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pass_wallet_label, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pass_wallet_field, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
-                .addGroup(walletPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(add_wallet_button, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(home_wallet_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                .addComponent(err_wallet_label, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
-        );
+        jLabel9.setIcon(icon2);
+        jLabel9.setVisible(true);
+        walletPanel.add(jLabel9);
+        jLabel9.setBounds(0, 0, 480, 340);
 
         mainPanel.add(walletPanel, "walletPanel");
 
+        cabBookPanel.setLayout(null);
+
         from_combobox.setModel(new javax.swing.DefaultComboBoxModel(getPlaces()));
+        from_combobox.setOpaque(false);
         from_combobox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 from_comboboxActionPerformed(evt);
             }
         });
+        cabBookPanel.add(from_combobox);
+        from_combobox.setBounds(188, 51, 106, 21);
 
         to_combobox.setModel(new javax.swing.DefaultComboBoxModel(getPlaces()));
+        cabBookPanel.add(to_combobox);
+        to_combobox.setBounds(188, 105, 106, 21);
 
-        from_book_label.setText("From");
+        from_book_label.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">From</font></b></html>");
+        cabBookPanel.add(from_book_label);
+        from_book_label.setBounds(104, 41, 55, 36);
 
-        to_book_label.setText("To");
+        to_book_label.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">To</font></b></html>");
+        cabBookPanel.add(to_book_label);
+        to_book_label.setBounds(113, 96, 46, 34);
 
-        book_book_button.setText("Book");
+        book_book_button.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Book</font></b></html>");
+        book_book_button.setContentAreaFilled(false);
+        book_book_button.setBorder(null);
         book_book_button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 book_book_buttonMouseClicked(evt);
             }
         });
+        cabBookPanel.add(book_book_button);
+        book_book_button.setBounds(60, 181, 129, 80);
 
-        home_bookPanel_button.setText("Home");
+        home_bookPanel_button.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Home</font></b></html>");
+        home_bookPanel_button.setContentAreaFilled(false);
+        home_bookPanel_button.setBorder(null);
         home_bookPanel_button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 home_bookPanel_buttonMouseClicked(evt);
             }
         });
+        cabBookPanel.add(home_bookPanel_button);
+        home_bookPanel_button.setBounds(244, 181, 142, 80);
 
         err_book_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         err_book_label.setText("ERROR");
         err_book_label.setVisible(false);
+        cabBookPanel.add(err_book_label);
+        err_book_label.setBounds(61, 279, 320, 50);
 
-        javax.swing.GroupLayout cabBookPanelLayout = new javax.swing.GroupLayout(cabBookPanel);
-        cabBookPanel.setLayout(cabBookPanelLayout);
-        cabBookPanelLayout.setHorizontalGroup(
-            cabBookPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cabBookPanelLayout.createSequentialGroup()
-                .addGroup(cabBookPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(cabBookPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(cabBookPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(from_book_label, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(to_book_label, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(28, 28, 28)
-                        .addGroup(cabBookPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(to_combobox, 0, 106, Short.MAX_VALUE)
-                            .addComponent(from_combobox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(cabBookPanelLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(book_book_button, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(home_bookPanel_button, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(cabBookPanelLayout.createSequentialGroup()
-                        .addGap(101, 101, 101)
-                        .addComponent(err_book_label, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(103, Short.MAX_VALUE))
-        );
-        cabBookPanelLayout.setVerticalGroup(
-            cabBookPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cabBookPanelLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(cabBookPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(from_book_label, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(from_combobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(cabBookPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(to_book_label, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(to_combobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(cabBookPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(home_bookPanel_button, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                    .addComponent(book_book_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(29, 29, 29)
-                .addComponent(err_book_label, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
-        );
+        jLabel10.setIcon(icon2);
+        jLabel10.setVisible(true);
+        cabBookPanel.add(jLabel10);
+        jLabel10.setBounds(0, 0, 480, 340);
 
         mainPanel.add(cabBookPanel, "cabBookPanel");
 
@@ -1077,11 +1014,17 @@ public class MainFrame extends javax.swing.JFrame {
         String email = email_text.getText();
         String pass = new String(pass_reg_field.getPassword());
         String retypedPass = new String(retypepass_reg_field.getPassword());
-        
+        if(username.equals("")||email.equals("")||pass.equals("")||retypedPass.equals(""))
+        {
+            err_reg_label.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Blank fields</font></b></html>");
+//            System.out.println("Wrong retyped password "+pass+" "+retypedPass);
+            err_reg_label.setVisible(true);  
+            return;            
+        }
         if(!pass.equals(retypedPass))
         {
-            err_reg_label.setText("Wrong retyped password "+pass+" "+retypedPass);
-            System.out.println("Wrong retyped password "+pass+" "+retypedPass);
+            err_reg_label.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Wrong retyped password</font></b></html>");
+//            System.out.println("Wrong retyped password "+pass+" "+retypedPass);
             err_reg_label.setVisible(true);  
             return;
         }
@@ -1089,7 +1032,7 @@ public class MainFrame extends javax.swing.JFrame {
         System.out.println(c.password);
         if(!db.createNewUser(c))
         {
-            err_reg_label.setText("Error registering");
+            err_reg_label.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Error registering</font></b></html>");
             err_reg_label.setVisible(true);            
         }
         else
@@ -1099,11 +1042,6 @@ public class MainFrame extends javax.swing.JFrame {
             callHomePanel("Registered You. Welcome!!!!");
         }
     }//GEN-LAST:event_reg_buttonMouseClicked
-
-    private void jMenuItem1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MousePressed
-        //if(User!=NULL)
-        callHomePanel();
-    }//GEN-LAST:event_jMenuItem1MousePressed
 
     private void add_wallet_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_wallet_buttonMouseClicked
         try{
@@ -1127,13 +1065,15 @@ public class MainFrame extends javax.swing.JFrame {
             }
             else
             {
-                err_wallet_label.setText("PASSWORD WRONG");
+                String msg="<html><b><font size=4 face=\"Roboto\" color=\"white\">Wrong Password</font></b></html>";
+                err_wallet_label.setText(msg);
                 err_wallet_label.setVisible(true);
             }
         }
         catch(Exception e)
         {
-            err_wallet_label.setText("Please enter valid money");  
+            String msg="<html><b><font size=4 face=\"Roboto\" color=\"white\">Please enter valid money</font></b></html>";
+            err_wallet_label.setText(msg);  
             err_wallet_label.setVisible(true);
         }
     }//GEN-LAST:event_add_wallet_buttonMouseClicked
@@ -1184,7 +1124,8 @@ public class MainFrame extends javax.swing.JFrame {
         String dest=(String)to_combobox.getSelectedItem();
         if(src.equals(dest))
         {
-            err_book_label.setText("Please choose different src and dest!!");
+            String msg="<html><b><font size=4 face=\"Roboto\" color=\"white\">Please choose different src and dest!!</font></b></html>";
+            err_book_label.setText(msg);
             err_book_label.setVisible(true);
             //return;
         }
@@ -1202,7 +1143,8 @@ public class MainFrame extends javax.swing.JFrame {
         Driver d=db.getBestDriver(posA);
         if(d==null)
         {
-            err_confirm_label.setText("Drivers not available");
+            String msg="<html><b><font size=4 face=\"Roboto\" color=\"white\">Drivers not available</font></b></html>";
+            err_confirm_label.setText(msg);
             err_confirm_label.setVisible(true);
             return;
         }
@@ -1226,14 +1168,16 @@ public class MainFrame extends javax.swing.JFrame {
             }
             else
             {
-                err_confirm_label.setText("Some error happened. Please book again.");
+                String msg="<html><b><font size=4 face=\"Roboto\" color=\"white\">Some error happened. Please book again</font></b></html>";
+                err_confirm_label.setText(msg);
                 err_confirm_label.setVisible(true);                
             }
 //            callHomePanel("Cab Booked. CHeck deets");
         }
         else
         {
-            err_confirm_label.setText("Not enough money in wallet");
+            String msg="<html><b><font size=4 face=\"Roboto\" color=\"white\">Not enough money</font></b></html>";            
+            err_confirm_label.setText(msg);
             err_confirm_label.setVisible(true);
         }
     }//GEN-LAST:event_confirm_confirm_buttonMouseClicked
@@ -1266,6 +1210,26 @@ public class MainFrame extends javax.swing.JFrame {
     private void deets_home_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deets_home_buttonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_deets_home_buttonActionPerformed
+
+    private void name_textActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_name_textActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_name_textActionPerformed
+
+    private void home_confirm_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_home_confirm_buttonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_home_confirm_buttonActionPerformed
+
+    private void bal_confirm_fieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bal_confirm_fieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bal_confirm_fieldActionPerformed
+
+    private void jMenuItem1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MousePressed
+        if(c1==null)
+        {
+            return;
+        }
+        callHomePanel();
+    }//GEN-LAST:event_jMenuItem1MousePressed
 
     
     public void createDrivers()
@@ -1352,10 +1316,15 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel img;
     private javax.swing.JPanel initPanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
