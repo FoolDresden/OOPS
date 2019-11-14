@@ -21,6 +21,8 @@ public class MainFrame extends javax.swing.JFrame {
     Customer c1;
     DBMSUtils db = new DBMSUtils();
     String posA="",posB="";
+    Driver prevDriver=null;
+    int refreshes = 0;
     /*
      * Creates new form MainFrame
      */
@@ -50,12 +52,25 @@ public class MainFrame extends javax.swing.JFrame {
         CardLayout cards=(CardLayout)mainPanel.getLayout();
         cards.show(mainPanel, "registerPanel");
     }
+    private void callReviewPanel()
+    {
+        CardLayout cards=(CardLayout)mainPanel.getLayout();
+        cards.show(mainPanel, "reviewPanel");
+    }
     private void callHomePanel()
     {
+//        if((++refreshes % 11) == 0 && refreshes != 0)
+//        {
+//            refreshes = 0;
+//            db.redistributeDrivers();
+//        }
         username_label.setText(getUsername());
-        
-        
-        System.out.println(db.getTripStatus(c1));
+        boolean prevIsInTrip = c1.isInTrip;
+        if(prevIsInTrip==true)
+        {
+            prevDriver=c1.assignedDriver;
+        }
+//        System.out.println(db.getTripStatus(c1));
         if(db.getTripStatus(c1))
         {
             wallet_status_label.setText(getWallet());            
@@ -66,6 +81,11 @@ public class MainFrame extends javax.swing.JFrame {
             home_err_label.setVisible(true);
         }
         else{
+        if(prevIsInTrip==true)
+        {
+            callReviewPanel();   
+            return;
+        }
         wallet_status_label.setText(getWallet());
         double x=Double.parseDouble(getWallet());
         if(x<=300)
@@ -84,13 +104,23 @@ public class MainFrame extends javax.swing.JFrame {
         }}
         CardLayout cards=(CardLayout)mainPanel.getLayout();
         cards.show(mainPanel, "homePanel");
+        
     }
     private void callHomePanel(String msg)
     {
+//        if((++refreshes % 11) == 0 && refreshes != 0)
+//        {
+//            refreshes = 0;
+//            db.redistributeDrivers();
+//        }
         username_label.setText(getUsername());
         String msg2="<html><b><font size=4 face=\"Roboto\" color=\"white\">"+msg+"</font></b></html>";
 //        System.out.println("excey");
-        
+        boolean prevIsInTrip = c1.isInTrip;
+        if(prevIsInTrip==true)
+        {
+            prevDriver=c1.assignedDriver;
+        }
         System.out.println(db.getTripStatus(c1));
         if(db.getTripStatus(c1))
         {
@@ -101,6 +131,11 @@ public class MainFrame extends javax.swing.JFrame {
             home_err_label.setVisible(true);
         }
         else{
+        if(prevIsInTrip==true)
+        {
+            callReviewPanel();   
+            return;
+        }
         wallet_status_label.setText(getWallet());
         double x=Double.parseDouble(getWallet());
         if(x<=300)
@@ -148,6 +183,11 @@ public class MainFrame extends javax.swing.JFrame {
         int dist = getDistance(posA,posB);
         double price = dist*100;
         long eta= dist*30000;
+        boolean prevIsInTrip = c1.isInTrip;
+        if(prevIsInTrip==true)
+        {
+            prevDriver=c1.assignedDriver;
+        }
         if(db.getTripStatus(c1))
         {
             cabname_confirm_label.setVisible(true);
@@ -157,7 +197,7 @@ public class MainFrame extends javax.swing.JFrame {
             rating_confirm_field.setText(""+c1.assignedDriver.rating);
             rating_confirm_field.setVisible(true);
             cabname_confirm_field.setVisible(true);
-            time_confirm_field.setText(""+eta);
+            time_confirm_field.setText(""+(((double)eta/60000))+" minutes");
             cost_confirm_field.setText(""+price);
             confirm_confirm_button.setVisible(false);
             err_confirm_label.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Tripping...</font></b></html>");
@@ -165,11 +205,16 @@ public class MainFrame extends javax.swing.JFrame {
         }
         else
         {
+            if(prevIsInTrip==true)
+            {
+                callReviewPanel();   
+                return;
+            }
             rating_confirm_label.setVisible(false);
             rating_confirm_field.setVisible(false);
             cabname_confirm_label.setVisible(false);
             cabname_confirm_field.setVisible(false);
-            time_confirm_field.setText(""+eta);
+            time_confirm_field.setText(""+(((double)eta/60000))+" minutes");
             cost_confirm_field.setText(""+price);    
             confirm_confirm_button.setVisible(true);
             err_confirm_label.setVisible(false);
@@ -264,6 +309,7 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel11 = new javax.swing.JLabel();
         mainPanel = new javax.swing.JPanel();
         initPanel = new javax.swing.JPanel();
         ExistingUserButton = new javax.swing.JButton();
@@ -345,10 +391,18 @@ public class MainFrame extends javax.swing.JFrame {
         home_bookPanel_button = new javax.swing.JButton();
         err_book_label = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        reviewPanel = new javax.swing.JPanel();
+        slider = new javax.swing.JSlider();
+        heading_review_label = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         sign_out_menuitem = new javax.swing.JMenuItem();
+
+        jLabel11.setText("jLabel11");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -857,6 +911,45 @@ public class MainFrame extends javax.swing.JFrame {
 
         mainPanel.add(cabBookPanel, "cabBookPanel");
 
+        reviewPanel.setLayout(null);
+
+        slider.setMaximum(5);
+        slider.setMinimum(1);
+        slider.setPaintLabels(true);
+        slider.setPaintTicks(true);
+        slider.setPaintTrack(true);
+        slider.setSnapToTicks(true);
+        slider.setValue(3);
+        reviewPanel.add(slider);
+        slider.setBounds(117, 132, 213, 42);
+
+        heading_review_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        heading_review_label.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Trip has ended!</font></b></html>");
+        reviewPanel.add(heading_review_label);
+        heading_review_label.setBounds(129, 10, 187, 52);
+
+        jLabel12.setText("<html><b><font size=4 face=\"Roboto\" color=\"white\">Please leave a rating</font></b></html>");
+        reviewPanel.add(jLabel12);
+        jLabel12.setBounds(159, 80, 128, 17);
+
+        jButton1.setText("<html><b><font size=5 face=\"Roboto\" color=\"white\">Submit</font></b></html>");
+        jButton1.setContentAreaFilled(false);
+        jButton1.setBorder(null);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        reviewPanel.add(jButton1);
+        jButton1.setBounds(177, 192, 101, 63);
+
+        jLabel13.setIcon(icon2);
+        jLabel13.setVisible(true);
+        reviewPanel.add(jLabel13);
+        jLabel13.setBounds(0, 0, 480, 340);
+
+        mainPanel.add(reviewPanel, "reviewPanel");
+
         jMenuBar1.setBackground(java.awt.SystemColor.controlHighlight);
         jMenuBar1.setForeground(java.awt.SystemColor.controlShadow);
 
@@ -967,6 +1060,7 @@ public class MainFrame extends javax.swing.JFrame {
             {
 //                password = Customer.HashPassword(password);
                 Customer c = db.loginUser(username, password);
+                
                 if(c==null)
                 {
                     String msg="<html><b><font size=5 face=Roboto color=white>Wrong Creds</font></b></html>";
@@ -985,7 +1079,7 @@ public class MainFrame extends javax.swing.JFrame {
             catch(Exception e)
             {
                 System.out.println("Err hereeee");
-//                System.out.println(e);
+                System.out.println(e);
                 String msg="<html><b><font size=5 face=Roboto color=white>OOPS! Please try again</font></b></html>";
                 err_signin_label.setText(msg);
                 err_signin_label.setVisible(true);
@@ -1238,6 +1332,13 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1MouseClicked
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        int x=slider.getValue();
+        boolean var=db.updateDriverRating(prevDriver, x);
+        System.out.println("Updated driver rating rey");
+        callHomePanel("Rating updated. Thanks!");
+    }//GEN-LAST:event_jButton1MouseClicked
+
     
     public void createDrivers()
     {
@@ -1314,6 +1415,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel err_wallet_label;
     private javax.swing.JLabel from_book_label;
     private javax.swing.JComboBox<String> from_combobox;
+    private javax.swing.JLabel heading_review_label;
     private javax.swing.JPanel homePanel;
     private javax.swing.JButton home_bookPanel_button;
     private javax.swing.JButton home_book_button;
@@ -1322,8 +1424,12 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton home_wallet_button;
     private javax.swing.JLabel img;
     private javax.swing.JPanel initPanel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1351,10 +1457,12 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton reset;
     private javax.swing.JButton reset_reg_button;
     private javax.swing.JPasswordField retypepass_reg_field;
+    private javax.swing.JPanel reviewPanel;
     private javax.swing.JLabel sideImg;
     private javax.swing.JButton signIn;
     private javax.swing.JMenuItem sign_out_menuitem;
     private javax.swing.JPanel signinPanel;
+    private javax.swing.JSlider slider;
     private javax.swing.JTextField time_confirm_field;
     private javax.swing.JLabel time_confirm_label;
     private javax.swing.JTextField toAdd_wallet_field;

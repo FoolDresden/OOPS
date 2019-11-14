@@ -224,6 +224,7 @@ public class DBMSUtils
                 else
                 {
                     double price = Double.valueOf(""+cursor.get("trip_price"));
+                    d.assignedCustomer.w.money = Double.valueOf(""+cursor.get("amount_in_wallet"));
                     d.assignedCustomer.w.removeMoney(price);
                     customers.updateOne(eq("name", d.assignedCustomer.username), 
                                         combine(set("in_trip", false), 
@@ -476,7 +477,7 @@ public class DBMSUtils
     
     public boolean updateDriverRating(Driver d, int new_rating)
     {
-        d.rating = (d.rating + new_rating)/d.n_rides;
+        d.rating = ((d.rating)*(d.n_rides-1) + new_rating)/d.n_rides;
         MongoCollection<Document> drivers = db.getCollection("drivers");
         Document cursor = drivers.find(eq("name", d.username)).first();
         if(cursor == null)
