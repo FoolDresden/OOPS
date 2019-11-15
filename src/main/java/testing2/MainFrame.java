@@ -60,7 +60,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
     private void callHomePanel()
     {
-        if((++refreshes % 2) == 0 && refreshes != 0)
+        if((++refreshes % 3) == 0 && refreshes != 0)
         {
             refreshes = 0;
             db.redistributeDrivers();
@@ -109,7 +109,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
     private void callHomePanel(String msg)
     {
-        if((++refreshes % 2) == 0 && refreshes != 0)
+        if((++refreshes % 3) == 0 && refreshes != 0)
         {
             refreshes = 0;
             db.redistributeDrivers();
@@ -795,7 +795,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
         homePanel.add(deets_home_button);
-        deets_home_button.setBounds(154, 273, 127, 41);
+        deets_home_button.setBounds(154, 273, 140, 41);
 
         jLabel8.setIcon(icon2);
         jLabel8.setVisible(true);
@@ -1083,8 +1083,11 @@ public class MainFrame extends javax.swing.JFrame {
                 else
                 {
                     c1=c;
+                    if(c1.isInTrip==true)
 //                    System.out.println("HomePanelERR");
-                    callHomePanel("Welcome");
+                    callHomePanel("Welcome. You're tripping..");
+                    else
+                        callHomePanel("Welcome!");
                 }
                
             }
@@ -1119,6 +1122,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     
     private void reg_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reg_buttonMouseClicked
+        System.out.println("making new user...");
         String username = name_text.getText();
         String email = email_text.getText();
         String pass = new String(pass_reg_field.getPassword());
@@ -1163,6 +1167,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_reg_buttonMouseClicked
 
     private void add_wallet_buttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_wallet_buttonMouseClicked
+        System.out.println("clicked add money");
         try{
             double toAdd = Double.parseDouble(toAdd_wallet_field.getText());
             if(toAdd<=0)
@@ -1359,7 +1364,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         int x=slider.getValue();
+        System.out.println("CLicked submit");
         boolean var=db.updateDriverRating(prevDriver, x);
+        c1.isInTrip=false;
+//        System.out.println("updated the thingy");
         System.out.println("Updated driver rating rey");
         callHomePanel("Rating updated. Thanks!");
     }//GEN-LAST:event_jButton1MouseClicked

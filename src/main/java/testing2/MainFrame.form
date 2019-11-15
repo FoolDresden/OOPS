@@ -777,7 +777,7 @@
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="154" y="273" width="-1" height="41"/>
+                  <AbsoluteConstraints x="154" y="273" width="140" height="41"/>
                 </Constraint>
               </Constraints>
             </Component>

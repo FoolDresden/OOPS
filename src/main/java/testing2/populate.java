@@ -13,8 +13,8 @@ public class populate {
     DBMSUtils db=new DBMSUtils();
     public static void main(String args[])
     {
-        Driver d=new Driver("5");
-        d.loc="E";
+        Driver d=new Driver("4");
+        d.loc="C";
         populate obj=new populate();
         obj.db.createNewUser(d);
     }
